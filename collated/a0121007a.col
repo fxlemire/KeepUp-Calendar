@@ -1,0 +1,5079 @@
+//@author: a0121007a
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUp\KeepUp.cpp
+	 */
+
+#include "KeepUp.h"
+
+KeepUp::KeepUp()
+{
+}
+
+
+KeepUp::~KeepUp()
+{
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUp\KeepUp.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUp\KeepUp.cpp
+	 */
+
+int main() {
+
+KeepUpLib ku;
+ku.start();
+
+return 0;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUp\KeepUp.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUp\KeepUp.h
+	 */
+
+	KeepUp();
+	~KeepUp();
+};
+
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUp\KeepUp.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\CalendarTest.cpp
+	 */
+
+		TEST_METHOD(EditTest) {
+			/*
+			string input;
+			vector<string> hardCodedOutput(Task::ATTR::SIZE);
+			vector<string> parsedString(Task::ATTR::SIZE);
+			Calendar *cal = new Calendar();
+			Task t;
+
+			input = "speak with the durian in <Alaska> at 0:00pm on 25/04/2014";
+			parsedString = CommandParser::getParsedUserInput(input);
+			t = Task(parsedString);
+			cal->taskAdd(t);
+
+			cal->taskEdit(0);
+			//SELECT CONSOLE OPTIONS IN UNIT TESTING?
+
+			free(cal);
+			*/
+		}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\CalendarTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\CalendarTest.cpp
+	 */
+
+		TEST_METHOD(SearchTest) {
+			string input;
+			vector<string> hardCodedOutput;
+			vector<string> parsedString(Task::ATTR::SIZE);
+			Calendar *cal = new Calendar();
+			Task t;
+
+			input = "dance with a kiwi at <the dance club> at 12:00pm on 01/01/2015";
+			parsedString = CommandParser::getParsedUserInput(input);
+			t = Task(parsedString);
+			cal->taskAdd(t);
+
+			input = "make romance with a kiwi at <Clarke Quay> at 20:30 on 01/01/2015";
+			parsedString = CommandParser::getParsedUserInput(input);
+			t = Task(parsedString);
+			cal->taskAdd(t);
+
+			input = "reject orange proposal on 02/01/2015";
+			parsedString = CommandParser::getParsedUserInput(input);
+			t = Task(parsedString);
+			cal->taskAdd(t);
+
+			hardCodedOutput.push_back("1. dance with a kiwi in the dance club at 12:00 on 1/1/2015");
+			hardCodedOutput.push_back("2. make romance with a kiwi in Clarke Quay at 20:30 on 1/1/2015");
+
+			input = "kiwi";
+			cal->getSearchResults(input);
+			cal->formatResultsForDisplay();
+
+			TestUtility::checkVectorEquality(hardCodedOutput, cal->searchResultsForDisplay);
+			TestUtility::clearVector(hardCodedOutput);
+
+			free(cal);
+
+		}
+
+	};
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\CalendarTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\stdafx.h
+	 */
+
+#include "KeepUpLib.h"
+#include "TestUtility.h"
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\stdafx.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\StorageTest.cpp
+	 */
+
+		TEST_METHOD(SaveTest) {
+			/* create a vector of Tasks */
+			string calName = "calendarTest.KeepUp";
+			vector<Task> tasks;
+			string input = "buy a pear in <Clementi> at 3pm on 4/5";
+			vector<string> parsedString = CommandParser::getParsedUserInput(input);
+			Task t = Task(parsedString);
+			tasks.push_back(t);
+			Assert::IsTrue(Storage::save(calName, tasks));
+		}
+
+	};
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\StorageTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\TestUtility.cpp
+	 */
+
+void TestUtility::checkVectorEquality(vector<string> expected, vector<string> actual) {
+	for (int i = 0; i < expected.size(); i++) {
+		Assert::AreEqual(expected[i], actual[i]);
+	}
+}
+
+void TestUtility::clearVector(vector<string> v1) {
+	v1.clear();
+	v1.resize(Task::ATTR::SIZE);
+}
+
+void TestUtility::clearVectors(vector<string> v1, vector<string> v2) {
+	v1.clear();
+	v2.clear();
+	v1.resize(Task::ATTR::SIZE);
+	v2.resize(Task::ATTR::SIZE);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\TestUtility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\TestUtility.h
+	 */
+
+/*
+Some utility methods useful for the testing
+*/
+#pragma once
+class TestUtility {
+public:
+	
+	static void checkVectorEquality(vector<string> expected, vector<string> actual);
+	static void clearVector(vector<string> v1);
+	static void clearVectors(vector<string> v1, vector<string> v2);
+};
+
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\TestUtility.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\UtilityTest.cpp
+	 */
+
+		TEST_METHOD(isContained) {
+			string s = "This is an image.";
+			string key = " is ";
+			Assert::IsTrue(Utility::isContained(key, s));
+
+			s = "This was a poster.";
+			key = " is ";
+			Assert::IsFalse(Utility::isContained(key, s));
+		}
+
+	};
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\UtilityTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+#include "Calendar.h"
+#include "CommandParser.h"
+#include "Storage.h"
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+const string Calendar::DEFAULT_NAME = "myCalendar";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+const string Calendar::COMMAND_ADD = "add";
+const string Calendar::COMMAND_BLOCK = "block";
+const string Calendar::COMMAND_DECORATE = "decorate";
+const string Calendar::COMMAND_DELETE = "delete";
+const string Calendar::COMMAND_DONE = "done";
+const string Calendar::COMMAND_EDIT = "edit";
+const string Calendar::COMMAND_EXIT = "exit";
+const string Calendar::COMMAND_HELP = "help";
+const string Calendar::COMMAND_LOAD = "load";
+const string Calendar::COMMAND_PRINT = "print";
+const string Calendar::COMMAND_REDO = "redo";
+const string Calendar::COMMAND_REMIND = "remind";
+const string Calendar::COMMAND_REPEAT = "repeat";
+const string Calendar::COMMAND_SAVE = "save";
+const string Calendar::COMMAND_UNDO = "undo";
+const string Calendar::COMMAND_VIEW = "view";
+const string Calendar::COMMAND_VIEW_DONE = "-done";
+const string Calendar::COMMAND_VIEW_DEL = "-del";
+const string Calendar::COMMAND_WEATHER = "weather";
+const string Calendar::COMMAND_INVALID = "invalid";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* messages */
+const string Calendar::MESSAGE_EDIT_NOT_EDITED = "Task could not be edited";
+const string Calendar::MESSAGE_EDIT_EDITED = "Task edited!";
+const string Calendar::MESSAGE_NOT_YET_IMPLEMENTED = "Sorry, this feature is not yet implemented... :(";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* help */
+const string Calendar::HELP_INTRO = "Here are the commands you can use in KeepUp:";
+const string Calendar::HELP_HOW_TO = "To know more about a specific command, type \"help 'command'\"";
+const string Calendar::HELP_ADD_1 = "Adds a task. Format is :";
+const string Calendar::HELP_ADD_2 = "[task name] in [<location>] at <time> on <date>";
+const string Calendar::HELP_ADD_3 = "Square brackets are omitted. Location and/or time and/or date can be omitted.";
+const string Calendar::HELP_ADD_4 = "Time can be a single value expressed in different ways, such as : 2, 2:30, 2.30, 2am, 2pm, 2:30am, 2:30pm";
+const string Calendar::HELP_ADD_5 = "--> It can also be a range, such as : 2:30pm-16:45";
+const string Calendar::HELP_ADD_6 = "Date is expressed as DD/MM/YYYY can be a single value expressed in different ways, such as : 1 or 1/10 or 1/10/2015";
+const string Calendar::HELP_ADD_7 = "--> It can also be a range, such as : 1/9/2014-30/4/2017";
+const string Calendar::HELP_ADD_8 = "--> keywords: today, td, tomorrow, tmr, tmrw, next ";
+const string Calendar::HELP_ADD_9 = "------------> mon, tue, wed, thu, thur, fri, sat, sun, and their corresponding full names";
+const string Calendar::HELP_ADD_10 = "------------> jan, feb, mar, may, jun, jul, aug, sep, sept, oct, nov, dec and their corresponding full names";
+const string Calendar::HELP_ADD_11 = "------------> 1 jan, 1st may, feb 2nd, oct 3rd, april 4, sept 7th 2016";
+const string Calendar::HELP_BLOCK = Calendar::MESSAGE_NOT_YET_IMPLEMENTED;
+const string Calendar::HELP_DECORATE = Calendar::MESSAGE_NOT_YET_IMPLEMENTED;
+const string Calendar::HELP_DELETE_1 = "Delete a task. Write delete and you will be prompted for your keyword.";
+const string Calendar::HELP_DELETE_2 = "If the task you want to delete appears in the results, select it.";
+const string Calendar::HELP_DONE_1 = "Marks a task as done. Write done and you will be prompted for your keyword.";
+const string Calendar::HELP_DONE_2 = "If the task you want to mark as done appears in the results, select it.";
+const string Calendar::HELP_EDIT_1 = "Allows task editing. Write edit and you will be prompted for your keyword.";
+const string Calendar::HELP_EDIT_2 = "Choose your task and choose which attribute you want to edit.";
+const string Calendar::HELP_EDIT_3 = "Edit the attribute the same way you would in the general query.";
+const string Calendar::HELP_EXIT = "Leaves the software. Will ask for confirmation.";
+const string Calendar::HELP_LOAD = "Loads all tasks from a file. If the calendar currently already has tasks, the tasks from the file will be added to the current calendar";
+const string Calendar::HELP_PRINT = Calendar::MESSAGE_NOT_YET_IMPLEMENTED;
+const string Calendar::HELP_REDO = "Redoes the last command undone.";
+const string Calendar::HELP_REMIND = Calendar::MESSAGE_NOT_YET_IMPLEMENTED;
+const string Calendar::HELP_REPEAT = Calendar::MESSAGE_NOT_YET_IMPLEMENTED;
+const string Calendar::HELP_SAVE_1 = "Saves all tasks inside a file of your specified name. The extension is .KeepUp";
+const string Calendar::HELP_SAVE_2 = "Format: save myCalendar";
+const string Calendar::HELP_UNDO = "Undoes the last command entered.";
+const string Calendar::HELP_VIEW_1 = "'view' shows all tasks that are not completed and not deleted."; 
+const string Calendar::HELP_VIEW_2 = "'view [keyword]' searches among all tasks for the specific keyword (without '[]')";
+const string Calendar::HELP_VIEW_3 = "'view -del' shows all deleted tasks.";
+const string Calendar::HELP_VIEW_4 = "'view -done' shows all completed tasks.";
+const string Calendar::HELP_WEATHER = Calendar::MESSAGE_NOT_YET_IMPLEMENTED;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* config */
+const int Calendar::TASK_NOT_FOUND = -1;
+const string Calendar::TASK_DELETED = "true";
+const string Calendar::TASK_DONE = "true";
+const string Calendar::ESCAPE_CHAR = "\\";
+const int Calendar::GO_BACK_OPTION = -1;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* prompt messages */
+//const string Calendar::MESSAGE_PROMPT_SEARCH_TERM = "Please enter your keyword "
+//	"for the task you wish to edit:";
+const string Calendar::MESSAGE_PROMPT_TASK_CHOICE_WITHIN_RESULTS = "Please choose the corresponding task:";
+const string Calendar::MESSAGE_EDIT_CHOICE_INTRO = "What would you like to edit?";
+const string Calendar::MESSAGE_INVALID_CHOICE = "Wrong choice. Please reselect.";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* edit choices */
+const string Calendar::MESSAGE_EDIT_CHOICE_TITLE =
+	to_string(EDIT_TYPE::EDIT_TYPE::TITLE) + ". " + "Title";
+const string Calendar::MESSAGE_EDIT_CHOICE_DATE_TIME =
+	to_string(EDIT_TYPE::EDIT_TYPE::DATETIME) + ". " + "Date and Time";
+const string Calendar::MESSAGE_EDIT_CHOICE_LOCATION =
+	to_string(EDIT_TYPE::EDIT_TYPE::LOCATION) + ". " + "Location";
+const string Calendar::MESSAGE_EDIT_CHOICE_REMINDER =
+	to_string(EDIT_TYPE::EDIT_TYPE::REMINDER) + ". " + "Reminder";
+const string Calendar::MESSAGE_EDIT_CHOICE_DESCRIPTION =
+	to_string(EDIT_TYPE::EDIT_TYPE::DESCRIPTION) + ". " + "Description";
+const string Calendar::MESSAGE_EDIT_CHOICE_PRIORITY =
+to_string(EDIT_TYPE::EDIT_TYPE::PRIORITY) + ". " + "Priority";
+const string Calendar::MESSAGE_EDIT_CHOICE_ATTACH =
+	to_string(EDIT_TYPE::EDIT_TYPE::ATTACHFILE) + ". " + "Attach file";
+const string Calendar::MESSAGE_EDIT_CHOICE_EVERYTHING =
+	to_string(EDIT_TYPE::EDIT_TYPE::EVERYTHING) + ". " + "Overwrite with a new query";
+const string Calendar::MESSAGE_EDIT_CHOICE_GO_BACK =
+	to_string(EDIT_TYPE::EDIT_TYPE::EVERYTHING + 1) + ". " + "Go back";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* edit prompt for new data*/
+const string Calendar::MESSAGE_EDIT_NEW_TITLE = "Enter new title:";
+const string Calendar::MESSAGE_EDIT_NEW_DATE_TIME = "Enter new date and time:";
+const string Calendar::MESSAGE_EDIT_NEW_LOCATION = "Enter new location:";
+const string Calendar::MESSAGE_EDIT_NEW_REMINDER = "Enter new reminder:";
+const string Calendar::MESSAGE_EDIT_NEW_DESCRIPTION = "Enter new description:";
+const string Calendar::MESSAGE_EDIT_NEW_PRIORITY = "Please enter your priority number:";
+const string Calendar::MESSAGE_EDIT_NEW_ATTACH = "Enter new attach file:";
+const string Calendar::MESSAGE_EDIT_NEW_EVERYTHING = "You can retype the whole new task:";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* edit confirm changes */
+const string Calendar::MESSAGE_EDIT_CONFIRM_EDIT = "Task edited!";
+const string Calendar::MESSAGE_EDIT_CONFIRM_PRIORITY = "Task received new priority!";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* menu back */
+const string Calendar::GO_BACK = ". Go back";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::taskView(string param) {
+	if (Utility::areEqual(param, Calendar::COMMAND_VIEW_DONE)) {
+		taskDisplayDone();
+	}
+	if (Utility::areEqual(param, Calendar::COMMAND_VIEW_DEL)) {
+		taskDisplayDeleted();
+	}
+	if (Utility::areEqual(param, Calendar::COMMAND_VIEW)) {
+		taskDisplayAll();
+	}
+	else {
+		Utility::removeEscapeChar(param);
+		Calendar::getSearchResults(param);
+
+		if (Utility::isEmpty(searchResults)) {
+			return;
+		}
+
+		displaySearchResults();
+		displayBackOption();
+
+		int userChoice;
+		bool notFine = true;
+
+		do {
+			try {
+				userChoice = pickResult();
+
+				if (userChoice == searchResults.size()) {
+					Utility::clearVector(searchResults);
+					Utility::clearVector(searchResultsForDisplay);
+					return;
+				}
+
+				int taskID = searchResults.at(userChoice);
+				Task toView = taskCollection.at(taskID);
+				vector<string> wholeTask = toView.getAttributesForDisplay();
+				Utility::showToUser(wholeTask);
+				notFine = false;
+			}
+			catch (exception &) {
+				Utility::showToUser(Calendar::MESSAGE_INVALID_CHOICE);
+			}
+		} while (notFine);
+
+		Utility::clearVector(searchResults);
+		Utility::clearVector(searchResultsForDisplay);
+	}
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::taskDone(int posTask) {
+	moveToUndo(posTask);
+	Task doneTask = taskCollection.at(posTask);
+	doneTask.setIsDone();
+	undoIdxStack.push(posTask);
+	taskCollection.at(posTask) = doneTask;
+	Utility::clearVector(searchResults);
+	Utility::clearVector(searchResultsForDisplay);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::taskEdit(int posTask) {
+	Task toEdit = taskCollection.at(posTask);
+
+	do {
+		Calendar::editTaskPrompt();
+
+		int editType = Utility::getIntFromUser();
+
+		if (editType == EDIT_TYPE::EDIT_TYPE::EVERYTHING + 1) {
+			Utility::clearVector(searchResults);
+			Utility::clearVector(searchResultsForDisplay);
+			return;
+		}
+
+		toEdit = processEdit(toEdit, editType);
+
+		moveToUndo(posTask);
+		undoIdxStack.push(posTask);
+
+		taskCollection.at(posTask) = toEdit;
+	} while (/*will leave if user chooses go back*/true);
+
+	Utility::clearVector(searchResults);
+	Utility::clearVector(searchResultsForDisplay);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+Task Calendar::processEdit(Task toEdit, int editType) {
+
+	string input;
+	vector<string> uInputParsed;
+	vector<string> dateAndTime(DATE_ENUM::DATE_ENUM::LASTPOSITION);
+
+	do {
+		switch (editType) {
+		case EDIT_TYPE::EDIT_TYPE::TITLE:
+			Utility::showToUser(Calendar::MESSAGE_EDIT_NEW_TITLE);
+			input = Utility::getStringFromUser();
+			toEdit.setName(input);
+			Utility::showToUser(Calendar::MESSAGE_EDIT_EDITED);
+			return toEdit;
+			break;
+		case EDIT_TYPE::EDIT_TYPE::DATETIME:
+			Utility::showToUser(Calendar::MESSAGE_EDIT_NEW_DATE_TIME);
+			input = Utility::getStringFromUser();
+			dateAndTime = CommandParser::getDateAndTime(input);
+			if (isValidDateTimeEdit(dateAndTime)) {
+				toEdit.setDateAndTime(dateAndTime);
+				Utility::showToUser(Calendar::MESSAGE_EDIT_CONFIRM_EDIT);
+			}
+			return toEdit;
+			break;
+		case EDIT_TYPE::EDIT_TYPE::LOCATION:
+			Utility::showToUser(Calendar::MESSAGE_EDIT_NEW_LOCATION);
+			input = Utility::getStringFromUser();
+			toEdit.setLocation(input);
+			Utility::showToUser(Calendar::MESSAGE_EDIT_EDITED);
+			return toEdit;
+			break;
+		case EDIT_TYPE::EDIT_TYPE::REMINDER:
+			//Utility::showToUser(Calendar::MESSAGE_EDIT_NEW_REMINDER);
+			//input = Utility::getStringFromUser();
+			Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+			return toEdit;
+			break;
+		case EDIT_TYPE::EDIT_TYPE::DESCRIPTION:
+			Utility::showToUser(Calendar::MESSAGE_EDIT_NEW_DESCRIPTION);
+			input = Utility::getStringFromUser();
+			toEdit.setDescription(input);
+			Utility::showToUser(Calendar::MESSAGE_EDIT_EDITED);
+			return toEdit;
+			break;
+		case EDIT_TYPE::EDIT_TYPE::PRIORITY:
+			input = Calendar::getUserPriority();
+			toEdit.setPriority(input);
+			Utility::showToUser(Calendar::MESSAGE_EDIT_CONFIRM_PRIORITY);
+			Utility::showToUser(Calendar::MESSAGE_EDIT_EDITED);
+			return toEdit;
+			break;
+		case EDIT_TYPE::EDIT_TYPE::ATTACHFILE:
+			//Utility::showToUser(Calendar::MESSAGE_EDIT_NEW_ATTACH);
+			//input = Utility::getStringFromUser();
+			Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+			return toEdit;
+			break;
+		case EDIT_TYPE::EDIT_TYPE::EVERYTHING:
+			Utility::showToUser(Calendar::MESSAGE_EDIT_NEW_EVERYTHING);
+			input = Utility::getStringFromUser();
+			Utility::addEscapeChar(input);
+			uInputParsed = CommandParser::getParsedUserInput(input);
+			Utility::removeEscapeChar(uInputParsed.at(Task::ATTR::NAME));
+			toEdit = Task(uInputParsed);
+			Utility::showToUser(Calendar::MESSAGE_EDIT_EDITED);
+			return toEdit;
+			break;
+		default:
+			Utility::showToUser(Calendar::MESSAGE_INVALID_CHOICE);
+			break;
+		}
+	} while (/*invalid choice by user. Valid choice returns!*/ true);
+	return toEdit;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* returns the position of the searched task in the vector of the calendar stored tasks */
+int Calendar::taskSearch(string searchTerm) {
+	Calendar::getSearchResults(searchTerm);
+
+	if (Utility::isEmpty(searchResults)) {
+		return Calendar::TASK_NOT_FOUND;
+	}
+	displaySearchResults();
+	displayBackOption();
+
+	int userChoice;
+	int result;
+	bool notFine = true;
+	do {
+		try {
+			userChoice = pickResult();
+
+			if (userChoice == searchResults.size()) {
+				Utility::clearVector(searchResults);
+				Utility::clearVector(searchResultsForDisplay);
+				return Calendar::GO_BACK_OPTION;
+			}
+
+			result = searchResults.at(userChoice);
+			notFine = false;
+		}
+		catch (exception &) {
+			Utility::showToUser(Calendar::MESSAGE_INVALID_CHOICE);
+		}
+	} while (notFine);
+
+	return result;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+int Calendar::pickResult() {
+	Utility::showToUser(Calendar::MESSAGE_PROMPT_TASK_CHOICE_WITHIN_RESULTS);
+
+	int pickTask = Utility::getIntFromUser();
+
+	return pickTask-1;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::displaySearchResults() {
+	formatResultsForDisplay();
+	Utility::showToUser(Calendar::searchResultsForDisplay);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::displayBackOption() {
+	int num = searchResults.size() + 1;
+	string formatGoBack = to_string(num) + Calendar::GO_BACK;
+	Utility::showToUser(formatGoBack);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::formatResultsForDisplay() {
+	for (unsigned int i = 0; i < searchResults.size(); i++) {
+		Task resultTask = taskCollection.at(searchResults.at(i));
+		string resultName = resultTask.getDisplay();
+		string toDisplay = Utility::numberize(i+1, resultName);
+		searchResultsForDisplay.push_back(toDisplay);
+	}
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+string Calendar::getSearchTerm() {
+	string searchTerm;
+	//Utility::showToUser(Calendar::MESSAGE_PROMPT_SEARCH_TERM);
+	getline(cin, searchTerm);
+	return searchTerm;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+string Calendar::getUserPriority() {
+	string priority;
+	bool notFine = true;
+	Utility::showToUser(Calendar::MESSAGE_EDIT_NEW_PRIORITY);
+	do {
+		getline(cin, priority);
+		try {
+			stoi(priority);
+			notFine = false;
+		}
+		catch (exception &) {
+			Utility::showToUser(Utility::ERROR_ENTER_NUMBER);
+		}
+	} while (notFine);
+	return priority;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::editTaskPrompt() {
+	Calendar::initializeEditChoices();
+
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_INTRO);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_TITLE);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_DATE_TIME);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_LOCATION);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_REMINDER);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_DESCRIPTION);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_PRIORITY);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_ATTACH);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_EVERYTHING);
+	Utility::showToUser(Calendar::MESSAGE_EDIT_CHOICE_GO_BACK);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::initializeEditChoices() {
+	Calendar::editChoices.at(EDIT_TYPE::EDIT_TYPE::TITLE) =
+		Calendar::MESSAGE_EDIT_CHOICE_TITLE;
+	Calendar::editChoices.at(EDIT_TYPE::EDIT_TYPE::DATETIME) =
+		Calendar::MESSAGE_EDIT_CHOICE_DATE_TIME;
+	Calendar::editChoices.at(EDIT_TYPE::EDIT_TYPE::LOCATION) =
+		Calendar::MESSAGE_EDIT_CHOICE_LOCATION;
+	Calendar::editChoices.at(EDIT_TYPE::EDIT_TYPE::REMINDER) =
+		Calendar::MESSAGE_EDIT_CHOICE_REMINDER;
+	Calendar::editChoices.at(EDIT_TYPE::EDIT_TYPE::DESCRIPTION) =
+		Calendar::MESSAGE_EDIT_CHOICE_DESCRIPTION;
+	Calendar::editChoices.at(EDIT_TYPE::EDIT_TYPE::ATTACHFILE) =
+		Calendar::MESSAGE_EDIT_CHOICE_ATTACH;
+	Calendar::editChoices.at(EDIT_TYPE::EDIT_TYPE::EVERYTHING) =
+		Calendar::MESSAGE_EDIT_CHOICE_EVERYTHING;
+	Calendar::editChoices.at(0) =
+		Calendar::MESSAGE_EDIT_CHOICE_GO_BACK;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::getSearchResults(string searchTerm) {
+	for (unsigned int i = 0; i<taskCollection.size(); i++) {
+		Task searchedTask = taskCollection.at(i);
+
+		if (!Utility::stringToBool(searchedTask.getIsDeleted())) {
+			string searchedName = searchedTask.getName();
+			size_t found = searchedName.find(searchTerm);
+
+			if (found != std::string::npos) {
+				//Holds the position of Tasks in taskCollection
+				searchResults.push_back(i);
+			}
+		}
+	}
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+bool Calendar::isFound(int task) {
+	if (task != Calendar::TASK_NOT_FOUND) {
+		return true;
+	}
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+bool Calendar::isValidDateTimeEdit(vector<string> dateAndTime) {
+	vector<string> dateTimeAsTASK_ATTR = Utility::convert_DATE_ENUM_to_TASK_ATTR(dateAndTime);
+
+	if (Task::isValidTime(dateTimeAsTASK_ATTR)) {
+		return(Task::isValidDate(dateTimeAsTASK_ATTR));
+	}
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::save(string calendar) {
+	Storage::save(calendar, taskCollection);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::load(string calendar) {
+	Storage::load(calendar, this);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::help() {
+	Utility::showToUser(Calendar::HELP_INTRO);
+	for (int i = HELP::HELP::FIRSTCOMMAND + 1; i < HELP::HELP::LASTCOMMAND; i++) {
+		string command = Utility::getHelp(i);
+		string display = to_string(i) + ". " + command;
+		Utility::showToUser(display);
+	}
+	Utility::showToUser(Calendar::HELP_HOW_TO);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::help(string command) {
+	Utility::getHelpForCommand(command);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+/*
+One of the core classes of KeepUp. The calendar allows for task storage (until saved by storage)
+and all command executions. It creates more enumerations for correct interaction with some specific classes
+which can be useful for commandParser class, KeepUpLib and Utility.
+*/
+#ifndef CALENDAR_H
+#define CALENDAR_H
+
+#include <iostream>
+#include <stack>
+#include <stdio.h>
+#include <string>
+#include "Task.h"
+#include <algorithm>  
+
+using namespace std;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+/* enumeration used for the help command */
+namespace HELP {
+	//DEL is DELETE (seems to be reserved keyword by windows)
+	enum HELP {
+		FIRSTCOMMAND, ADD, BLOCK, DECORATE, DEL, DONE, EDIT, EXIT, LOAD, PRINT,
+		REDO, REMIND, REPEAT, SAVE, UNDO, VIEW, WEATHER, LASTCOMMAND
+	};
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+/* enumeration used for specific date-only manipulations */
+namespace DATE_ENUM {
+	enum DATE_ENUM {
+		STARTYEAR, STARTMONTH, STARTDAY, STARTHOUR, STARTMINUTE, ENDYEAR,
+		ENDMONTH, ENDDAY, ENDHOUR, ENDMINUTE, ISDONE, HASDATE, HASEXPIRED, LASTPOSITION
+	};
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+/* enumeration used for edit command */
+namespace EDIT {
+	enum EDIT {
+		COMMAND, PARAM, SEARCH_KEYWORDS, STARTYEAR, STARTMONTH, STARTDAY, STARTHOUR,
+		STARTMINUTE, ENDYEAR, ENDMONTH, ENDDAY, ENDHOUR, ENDMINUTE, PRIORITY,
+		NAME, DESCRIPTION, LOCATION, ISDONE, HASEXPIRED, HASDATE, LASTPOSITION
+	};
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+/* enumeration used for the choices inside edit */
+namespace EDIT_TYPE {
+	enum EDIT_TYPE {
+		TITLE=1, DATETIME, LOCATION, REMINDER, DESCRIPTION, PRIORITY, ATTACHFILE,
+		EVERYTHING
+	};
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+/* remind not implemented yet */
+namespace REMIND {
+	enum REMIND { COMMAND, SEARCH_KEYWORDS, YEAR, MONTH, DAY, HOUR, MINUTE, FREQUENCY };
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+/* repeat not implemented yet */
+namespace REPEAT {
+	enum REPEAT { COMMAND, SEARCH_KEYWORDS, FREQUENCY };
+}
+
+/* frequency not implemented yet */
+//namespace FREQUENCY {
+//	enum FREQUENCY { DAILY, WEEKLY, MONTHLY, ANNUALLY };
+//}
+
+class Calendar {
+public:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* constructor */
+	Calendar();
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* default name of calendar to be saved */
+	static const string DEFAULT_NAME;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* commands keywords */
+	static const string COMMAND_ADD;
+	static const string COMMAND_BLOCK;
+	static const string COMMAND_DECORATE;
+	static const string COMMAND_DELETE;
+	static const string COMMAND_DONE;
+	static const string COMMAND_EDIT;
+	static const string COMMAND_EXIT;
+	static const string COMMAND_HELP;
+	static const string COMMAND_SAVE;
+	static const string COMMAND_LOAD;
+	static const string COMMAND_PRINT;
+	static const string COMMAND_REMIND;
+	static const string COMMAND_REPEAT;
+	static const string COMMAND_VIEW;
+	static const string COMMAND_VIEW_DONE;
+	static const string COMMAND_VIEW_DEL;
+	static const string COMMAND_WEATHER;
+	static const string COMMAND_INVALID;
+	static const string COMMAND_UNDO;
+	static const string COMMAND_REDO;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* help messages */
+	static const string HELP_INTRO;
+	static const string HELP_HOW_TO;
+	static const string HELP_ADD_1;
+	static const string HELP_ADD_2;
+	static const string HELP_ADD_3;
+	static const string HELP_ADD_4;
+	static const string HELP_ADD_5;
+	static const string HELP_ADD_6;
+	static const string HELP_ADD_7;
+	static const string HELP_ADD_8;
+	static const string HELP_ADD_9;
+	static const string HELP_ADD_10;
+	static const string HELP_ADD_11;
+	static const string HELP_BLOCK;
+	static const string HELP_DECORATE;
+	static const string HELP_DELETE_1;
+	static const string HELP_DELETE_2;
+	static const string HELP_DONE_1;
+	static const string HELP_DONE_2;
+	static const string HELP_EDIT_1;
+	static const string HELP_EDIT_2;
+	static const string HELP_EDIT_3;
+	static const string HELP_EXIT;
+	static const string HELP_LOAD;
+	static const string HELP_PRINT;
+	static const string HELP_REDO;
+	static const string HELP_REMIND;
+	static const string HELP_REPEAT;
+	static const string HELP_SAVE_1;
+	static const string HELP_SAVE_2;
+	static const string HELP_UNDO;
+	static const string HELP_VIEW_1;
+	static const string HELP_VIEW_2;
+	static const string HELP_VIEW_3;
+	static const string HELP_VIEW_4;
+	static const string HELP_WEATHER;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* config */
+	static const int TASK_NOT_FOUND;
+	static const string TASK_DELETED;
+	static const string TASK_DONE;
+	static const string ESCAPE_CHAR;
+	static const int GO_BACK_OPTION;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* MESSAGES */
+	//static const string MESSAGE_PROMPT_SEARCH_TERM;
+	/* miscellaneous */
+	static const string Calendar::GO_BACK;
+	static const string Calendar::MESSAGE_INVALID_CHOICE;
+	static const string MESSAGE_PROMPT_TASK_CHOICE_WITHIN_RESULTS;
+	static const string Calendar::MESSAGE_NOT_YET_IMPLEMENTED;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* edit */
+	static const string Calendar::MESSAGE_EDIT_NOT_EDITED;
+	static const string Calendar::MESSAGE_EDIT_EDITED;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_INTRO;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_TITLE;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_DATE_TIME;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_LOCATION;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_REMINDER;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_DESCRIPTION;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_PRIORITY;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_ATTACH;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_EVERYTHING;
+	static const string Calendar::MESSAGE_EDIT_CHOICE_GO_BACK;
+	static const string Calendar::MESSAGE_EDIT_NEW_TITLE;
+	static const string Calendar::MESSAGE_EDIT_NEW_DATE_TIME;
+	static const string Calendar::MESSAGE_EDIT_NEW_LOCATION;
+	static const string Calendar::MESSAGE_EDIT_NEW_REMINDER;
+	static const string Calendar::MESSAGE_EDIT_NEW_DESCRIPTION;
+	static const string Calendar::MESSAGE_EDIT_NEW_PRIORITY;
+	static const string Calendar::MESSAGE_EDIT_NEW_ATTACH;
+	static const string Calendar::MESSAGE_EDIT_NEW_EVERYTHING;
+	static const string Calendar::MESSAGE_EDIT_CONFIRM_EDIT;
+	static const string Calendar::MESSAGE_EDIT_CONFIRM_PRIORITY;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* messages to other commands */
+	static const string Calendar::MESSAGE_UNDO_CAN;
+	static const string Calendar::MESSAGE_REDO_CAN;
+	static const string Calendar::MESSAGE_UNDO_CANNOT;
+	static const string Calendar::MESSAGE_REDO_CANNOT;
+	static const string Calendar::MESSAGE_VIEW_TIMED_TASK;
+	static const string Calendar::MESSAGE_VIEW_DEADLINE_TASK;
+	static const string Calendar::MESSAGE_VIEW_FLOATING_TASK;
+	static const string Calendar::MESSAGE_VIEW_SEPARATOR;
+	static const string Calendar::MESSAGE_VIEW_DONE_TASK;
+	static const string Calendar::MESSAGE_VIEW_DEL_TASK;
+	static const string Calendar::MESSAGE_VIEW_ALL_TASK;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* enum for calendar command interaction */
+	enum COMMAND_TYPE {
+		EXIT, TASKADD, TASKBLOCK, TASKDECORATE, TASKDELETE, TASKDONE, TASKEDIT,
+		HELP, SAVE, LOAD, TASKPRINT, TASKREMIND, TASKREPEAT, TASKVIEW, TASKUNDO,
+		TASKREDO, TASKWEATHER, TASKINVALID
+	};
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* variables */
+	vector<string> searchResultsForDisplay; //public for testing matters
+	/* serves as a storage to smartly print edit choices */
+	static vector<string> editChoices;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* methods */
+	bool isFound(int task);
+	bool isValidDateTimeEdit(vector<string> dateAndTime);
+	int taskSearch(string searchTerm);
+	string getSearchTerm();
+	Task processEdit(Task toEdit, int editType);
+	void taskAdd(Task newTask);
+	void taskDelete(int posTask);
+	void taskEdit(int posTask);
+	void help();
+	void help(string command);
+	void taskDisplayAll();
+	void taskDisplayDone();
+	void taskDisplayDeleted();
+	void taskSortAll(Task currTask);
+	void taskView(string param);
+	void taskDone(int posTask);
+	void getSearchResults(string searchTerm);
+	void displayBackOption();
+	void displaySearchResults();
+	void undoCommand();
+	void redoCommand();
+	void save(string calendar);
+	void load(string calendar);
+	void formatResultsForDisplay(); //public for testing matters
+
+private:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* variables */
+	vector<Task> taskCollection; //task storage
+	vector<int> searchResults;
+	stack<Task> undoTaskStack;
+	stack<Task> redoTaskStack;
+	stack<int> undoIdxStack;
+	stack<int> redoIdxStack;
+	vector<Task> timedTask;
+	vector<Task> deadlineTask;
+	vector<Task> floatingTask;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+	 */
+
+	/* calendar private helper methods */
+	string getUserPriority();
+	void Calendar::editTaskPrompt();
+	void initializeEditChoices();
+	int pickResult();
+	void Calendar::moveToUndo(int posTask);
+	void Calendar::moveToUndo(Task currTask);
+	void Calendar::replaceTask(Task newTask, int posTask);
+
+	void Calendar::editTaskExecute(Task editedTask);
+
+};
+
+#endif
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+//this function is to check what is the command from the user (add/edit/view etc.)
+string CommandParser::getCommand(string input){
+	string cmd = input.substr(startingPosition, input.find(commandIndicator)); //first word in the user inpurt line
+	Calendar::COMMAND_TYPE command = Utility::stringToCOMMAND_TYPE(cmd);
+	CommandParser::_command = command;
+
+	if (Utility::isValidCommand(command)) { //if the command is a valid command type, return it. else return "add"
+		return cmd;
+	}
+	return Calendar::COMMAND_ADD; //if command was invalid, it means user wants to add
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+#include "KeepUpLib.h"
+
+/* KeepUp Calendar v0.1
+ * Team Members:
+ * Francois-Xavier Lemire
+ * Guan Tengyan
+ * Ong Shi Rong
+ * Sun Yangge
+ * Xie Xin
+ */
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+const string KeepUpLib::MESSAGE_WELCOME = "Welcome to KeepUp!";
+const string KeepUpLib::MESSAGE_PROMPT_COMMAND = "Please enter command:";
+const string KeepUpLib::MESSAGE_PROMPT_SEARCH = "Please enter search term:";
+const string KeepUpLib::MESSAGE_GOODBYE = "Goodbye!";
+const string KeepUpLib::MESSAGE_CONFIRM_EXIT = "Are you sure you wish to exit? All unsaved changes will be lost. (Y/n)";
+const string KeepUpLib::MESSAGE_CONFIRM_TASKADD = "Task added!";
+const string KeepUpLib::MESSAGE_CONFIRM_TASKDEL = "Task deleted!";
+const string KeepUpLib::MESSAGE_CONFIRM_TASKDONE = "Task marked done!";
+const string KeepUpLib::MESSAGE_NOTFOUND = "Sorry! The task you want is not found!";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+void KeepUpLib::welcomeMessage() {
+	Utility::showToUser(MESSAGE_WELCOME);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+void KeepUpLib::goodbyeMessage() {
+	Utility::showToUser(MESSAGE_GOODBYE);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+string KeepUpLib::promptUserForInput() {
+	string operation;
+	getline(cin, operation);
+	return operation;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+void KeepUpLib::executeUserInput(vector<string> uInputParsed, Calendar *cal) {
+	Calendar::COMMAND_TYPE command = Utility::stringToCOMMAND_TYPE(uInputParsed[Task::ATTR::COMMAND]);
+	assert(Utility::isValidCommand(command));
+
+	//exit if is command add unvalid params
+	if (Utility::isAdd(command) && !(isAllValid(uInputParsed))) {
+		return;
+	}
+
+	int taskID;
+	string searchTerm;
+	string param;
+	Task t = Task();
+
+	if (Utility::isAdd(command)) {
+		Utility::removeEscapeChar(uInputParsed.at(Task::ATTR::NAME));
+		t = Task(uInputParsed);
+	}
+	
+	switch (command) {
+	case Calendar::TASKADD:
+		cal->taskAdd(t);
+		Utility::showToUser(KeepUpLib::MESSAGE_CONFIRM_TASKADD);
+		break;
+	case Calendar::TASKBLOCK:
+		Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+		break;
+	case Calendar::TASKDECORATE:
+		Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+		break;
+	case Calendar::TASKDELETE:
+		Utility::showToUser(KeepUpLib::MESSAGE_PROMPT_SEARCH);
+		getline(cin, searchTerm);
+		taskID = cal->taskSearch(searchTerm);
+		if (taskID == Calendar::GO_BACK_OPTION) {
+			return;
+		}
+		if (cal->isFound(taskID)) {
+			cal->taskDelete(taskID);
+			Utility::showToUser(KeepUpLib::MESSAGE_CONFIRM_TASKDEL);
+		}
+		else {
+			Utility::showToUser(KeepUpLib::MESSAGE_NOTFOUND);
+		}
+		break;
+	case Calendar::TASKDONE:
+		Utility::showToUser(KeepUpLib::MESSAGE_PROMPT_SEARCH);
+		searchTerm = cal->getSearchTerm();
+		taskID = cal->taskSearch(searchTerm);
+		if (taskID == Calendar::GO_BACK_OPTION) {
+			return;
+		}
+		if (cal->isFound(taskID)) {
+			cal->taskDone(taskID);
+			Utility::showToUser(KeepUpLib::MESSAGE_CONFIRM_TASKDONE);
+		}
+		else {
+			Utility::showToUser(KeepUpLib::MESSAGE_NOTFOUND);
+		}
+		break;
+	case Calendar::TASKEDIT:
+		Utility::showToUser(KeepUpLib::MESSAGE_PROMPT_SEARCH);
+		searchTerm = cal->getSearchTerm();
+		taskID = cal->taskSearch(searchTerm);
+		if (taskID == Calendar::GO_BACK_OPTION) {
+			return;
+		}
+		if (cal->isFound(taskID)) {
+			cal->taskEdit(taskID);
+		} else {
+			Utility::showToUser(KeepUpLib::MESSAGE_NOTFOUND);
+		}
+		break;
+	case Calendar::HELP:
+		param = uInputParsed.at(Task::ATTR::NAME);
+		if (Utility::areEqual(param, Calendar::COMMAND_HELP)) {
+			cal->help();
+		} else {
+			cal->help(param);
+		}
+		break;
+	case Calendar::SAVE:
+		param = uInputParsed.at(Task::ATTR::NAME);
+		if (Utility::areEqual(param, Calendar::COMMAND_SAVE)) {
+			param = Calendar::DEFAULT_NAME;
+		}
+		cal->save(param);
+		break;
+	case Calendar::LOAD:
+		param = uInputParsed.at(Task::ATTR::NAME);
+		if (Utility::areEqual(param, Calendar::COMMAND_LOAD)) {
+			param = Calendar::DEFAULT_NAME;
+		}
+		cal->load(param);
+		break;
+	case Calendar::TASKPRINT:
+		Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+		//cal.taskPrint();
+		break;
+	case Calendar::TASKREMIND:
+		Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+		//cal.taskRemind();
+		break;
+	case Calendar::TASKREPEAT:
+		Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+		//cal.taskRepeat();
+		break;
+	case Calendar::TASKVIEW:
+		param = uInputParsed.at(Task::ATTR::NAME);
+		cal->taskView(param);
+		break;
+	case Calendar::TASKWEATHER:
+		Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+		//cal.taskWeather();
+		break;
+	case Calendar::TASKUNDO:
+		cal->undoCommand();
+		break;
+	case Calendar::TASKREDO:
+		cal->redoCommand();
+		break;
+	default:
+		break;
+	}
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+bool KeepUpLib::isAllValid(vector<string> userInputParsed) {
+	bool validTime = Task::isValidTime(userInputParsed);
+	bool validPriority = Task::isValidPriority(userInputParsed.at(Task::ATTR::PRIORITY));
+	if (validTime && validPriority) {
+		bool validDate = Task::isValidDate(userInputParsed);
+		return validDate;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+void KeepUpLib::run(Calendar *cal) {
+	vector<string> uInputParsed(Task::ATTR::SIZE);
+	uInputParsed.at(Task::ATTR::COMMAND) = Calendar::COMMAND_EXIT; //avoid infinite loop?
+	do {
+		Utility::showToUser(KeepUpLib::MESSAGE_PROMPT_COMMAND);
+		string uInput = promptUserForInput();
+		try {
+			uInputParsed = CommandParser::getParsedUserInput(uInput);
+		} catch (exception &e) {
+			Utility::showToUser(e.what());
+		}
+		executeUserInput(uInputParsed, cal);
+	} while (uInputParsed[Task::ATTR::COMMAND] != Calendar::COMMAND_EXIT);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+void KeepUpLib::confirmExit() {
+	Utility::showToUser(KeepUpLib::MESSAGE_CONFIRM_EXIT);
+	if (Utility::getYesNoConfirmation()) {
+		fineToExit = true;
+	} else {
+		fineToExit = false;
+	}
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+	 */
+
+void KeepUpLib::start() {
+	welcomeMessage();
+	fineToExit = false;
+	Calendar *cal = new Calendar(); //or load from storage
+	do {
+		run(cal);
+		confirmExit();
+	} while (!fineToExit);
+	goodbyeMessage();
+	free(cal);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+	 */
+
+/*
+KeepUpLib is the class that coordinates all actions together and allows interaction
+between user, calendar and command parser.
+*/
+#ifndef KEEPUP_H
+#define KEEPUP_H
+
+#include <assert.h>
+#include "Calendar.h"
+#include "CommandParser.h"
+#include "Task.h"
+#include "Utility.h"
+#include "Storage.h"
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class KeepUpLib {
+public:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+	 */
+
+	/* the main method of KeepUpLib */
+	void start();
+private:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+	 */
+
+	/* messages for the user */
+	static const string MESSAGE_GOODBYE;
+	static const string MESSAGE_WELCOME;
+	static const string MESSAGE_PROMPT_COMMAND;
+	static const string MESSAGE_PROMPT_SEARCH;
+	static const string MESSAGE_CONFIRM_EXIT;
+	static const string MESSAGE_CONFIRM_TASKADD;
+	static const string MESSAGE_CONFIRM_TASKDEL;
+	static const string MESSAGE_CONFIRM_TASKDONE;
+	static const string MESSAGE_NOTFOUND;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+	 */
+
+	/* methods */
+	/* checks everything is fine before pursuing */
+	bool isAllValid(vector<string> userInputParsed);
+	void confirmExit();
+	void executeUserInput(vector<string> userInputParsed, Calendar *cal);
+	void run(Calendar *cal);
+	void goodbyeMessage();
+	void welcomeMessage();
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+	 */
+
+	/* helper method */
+	string promptUserForInput();
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+	 */
+
+	/* variable */
+	bool fineToExit;
+};
+
+#endif
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\KeepUpLib.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+	 */
+
+/*
+This class manages all storing operations on the hard drive, i.e. save and load.
+*/
+#ifndef STORAGE_H
+#define STORAGE_H
+
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "Task.h"
+#include "Utility.h"
+#include <Windows.h>
+
+using namespace std;
+
+class Storage {
+public:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+	 */
+
+	/* file path */
+	static const string USER_LOCATION;
+	static const string FOLDER_LOCATION;
+	static const string FILE_EXTENSION;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+	 */
+
+	/* storage messages */
+	static const string FILE_OPEN_ERROR;
+	static const string FILE_TASK_SEPARATOR;
+	static const string MESSAGE_CORRUPTED;
+	static const string MESSAGE_LOADING;
+	static const string MESSAGE_LOADED;
+	static const string MESSAGE_SAVING;
+	static const string MESSAGE_SAVED;
+	static const string MESSAGE_WAITING_SYMBOL;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+	 */
+
+	/* main storage methods */
+	/* save takes the calendarName as a fileName and a vector of the tasks to be saved */
+	static bool save(string calName, vector<Task> tasks);
+	/* load takes calendar string as fileName and a calendar pointer to store loaded tasks into */
+	static bool load(string calendar, Calendar *cal);
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+	 */
+
+	/* storage specific helper methods */
+	static bool isExistingDirectory(string dir);
+	static string getCalendarLocation(string calName);
+	static void createDirectory();
+};
+#endif
+
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Storage.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+#include "Task.h"
+#include "Utility.h"
+
+/* attributes */
+const string Task::STARTYEAR_STR = "Start Year";
+const string Task::STARTMONTH_STR = "Start Month";
+const string Task::STARTDAY_STR = "Start Day";
+const string Task::STARTHOUR_STR = "Start Hour";
+const string Task::STARTMINUTE_STR = "Start Minute";
+const string Task::ENDYEAR_STR = "End Year";
+const string Task::ENDMONTH_STR = "End Month";
+const string Task::ENDDAY_STR = "End Day";
+const string Task::ENDHOUR_STR = "End Hour";
+const string Task::ENDMINUTE_STR = "End Minute";
+const string Task::PRIORITY_STR = "Priority";
+const string Task::NAME_STR = "Name";
+const string Task::DESCRIPTION_STR = "Description";
+const string Task::LOCATION_STR = "Location";
+const string Task::ISDONE_STR = "Task completed";
+const string Task::ISDONE_ALERT = "DONE";
+const string Task::ISDELETED_STR = "Task deleted";
+const string Task::ISDELETED_ALERT = "DELETED";
+const string Task::ISIMPT_STR = "Task marked as important";
+const string Task::ISIMPT_ALERT = "MARKED";
+const string Task::HASEXPIRED_STR = "Task expired";
+const string Task::ATTR_SEPARATOR = ": ";
+const string Task::VALUE_TRUE_FOR_DISPLAY = "Yes";
+const string Task::VALUE_FALSE_FOR_DISPLAY = "No";
+
+const bool Task::TRUE = true;
+const bool Task::FALSE = false;
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+/* config */
+const int Task::INT_NOT_EXIST = -1;
+const bool Task::BOOL_NOT_EXIST = false;
+const string Task::DISPLAY_DATE_ATTR_NOT_SPECIFIED = "-";
+const string Task::DISPLAY_DATE_NOT_SPECIFIED = "-/-/-";
+const string Task::DISPLAY_HOUR_NOT_SPECIFIED = "(not specified)";
+const string Task::DISPLAY_KEY_DATE = " on ";
+const string Task::DISPLAY_KEY_DATE_RANGE = " from ";
+const string Task::DISPLAY_KEY_LOC = " in ";
+const string Task::DISPLAY_KEY_TIME = " at ";
+const string Task::DISPLAY_KEY_TIME_RANGE = " from ";
+const string Task::DISPLAY_MINUTES_NOT_SPECIFIED = "00";
+const string Task::DISPLAY_NAME_NOT_SPECIFIED = "(not specified)";
+const string Task::DISPLAY_SPACE = " ";
+const string Task::DISPLAY_TIME_NOT_SPECIFIED = "(not specified)";
+const string Task::STRING_NOT_EXIST = ",,,"; //random to make sure no one types that
+const string Task::DATE_RANGE_SEPARATOR = " until ";
+const string Task::TIME_RANGE_SEPARATOR = " to ";
+const string Task::DATE_SEPARATOR_ENGLISH = "/";
+const string Task::TIME_SEPARATOR_ENGLISH = ":";
+const string Task::ZERO_MINUTES = "00";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+/* error messages */
+const string Task::ERROR_DAY = "Invalid day: please enter a days' name or a date's number between 0 and 31";
+const string Task::ERROR_DAY_31 = "Invalid day: this month has 30 days, not 31";
+const string Task::ERROR_DAY_FEB = "Invalid day: this month has 28 days only or is not on a leap year";
+const string Task::ERROR_MONTH = "Invalid month: please enter a month's name or a number between 0 and 12";
+const string Task::ERROR_HOUR = "Invalid hour: please enter a number between 0 and 23";
+const string Task::ERROR_MINUTE = "Invalid minute: please enter a number between 0 and 59";
+const string Task::ERROR_ENDDATE = "Invalid ending date: ending date should come after or be the same as the starting date";
+
+const string Task::ERROR_STARTHOUR = "Invalid input: start hour";
+const string Task::ERROR_STARTMINUTE = "Invalid input: start minute";
+const string Task::ERROR_STARTDAY = "Invalid input: start day";
+const string Task::ERROR_STARTDAY_31 = "Invalid start day: this month has less days than the one entered";
+const string Task::ERROR_STARTMONTH = "Invalid input: start month";
+const string Task::ERROR_STARTYEAR = "Invalid start year: please enter a number";
+const string Task::ERROR_ENDHOUR = "Invalid input: end hour";
+const string Task::ERROR_ENDHOUR_BEFORE_START = "End hour has to be the same or after the starting time";
+const string Task::ERROR_ENDMINUTE = "Invalid input: end minute";
+const string Task::ERROR_ENDMINUTE_BEFORE_START = "End minute has to be the same or after the starting time";
+const string Task::ERROR_ENDDAY = "Invalid input: end day";
+const string Task::ERROR_ENDDAY_31 = "Invalid end day: this month has less days than the one entered";
+const string Task::ERROR_ENDDAY_BEFORE_START = "End day has to be the same or after the starting day";
+const string Task::ERROR_ENDMONTH = "Invalid input: end month";
+const string Task::ERROR_ENDMONTH_BEFORE_START = "End month has to be the same or after the starting month";
+const string Task::ERROR_ENDYEAR = "Invalid end year";
+const string Task::ERROR_ENDYEAR_BEFORE_START = "End year has to be the same or after the starting year";
+const string Task::ERROR_PRIORITY = "Invalid priority: please enter a number";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+/* constructors */
+Task::Task() {
+	startYear = Task::INT_NOT_EXIST;
+	startMonth = Task::INT_NOT_EXIST;
+	startDay = Task::INT_NOT_EXIST;
+	startHour = Task::INT_NOT_EXIST;
+	startMinute = Task::INT_NOT_EXIST;
+	endYear = Task::INT_NOT_EXIST;
+	endMonth = Task::INT_NOT_EXIST;
+	endDay = Task::INT_NOT_EXIST;
+	endHour = Task::INT_NOT_EXIST;
+	endMinute = Task::INT_NOT_EXIST;
+	priority = Task::INT_NOT_EXIST;
+	name = Task::STRING_NOT_EXIST;
+	location = Task::STRING_NOT_EXIST;
+	isDone = Task::BOOL_NOT_EXIST;
+	isDeleted = Task::BOOL_NOT_EXIST;
+	isImpt = Task::BOOL_NOT_EXIST;
+	hasDate = Task::BOOL_NOT_EXIST;
+	hasExpired = Task::BOOL_NOT_EXIST;
+}
+Task::Task(vector<string> attributes) {
+	name = attributes[ATTR::NAME];
+	location = attributes[ATTR::LOCATION];
+	setStartHour(attributes.at(ATTR::STARTHOUR));
+	setStartMinute(attributes.at(ATTR::STARTMINUTE));
+	setStartDay(attributes.at(ATTR::STARTDAY));
+	setStartMonth(attributes.at(ATTR::STARTMONTH));
+	setStartYear(attributes.at(ATTR::STARTYEAR));
+	setEndHour(attributes.at(ATTR::ENDHOUR));
+	setEndMinute(attributes.at(ATTR::ENDMINUTE));
+	setEndDay(attributes.at(ATTR::ENDDAY));
+	setEndMonth(attributes.at(ATTR::ENDMONTH));
+	setEndYear(attributes.at(ATTR::ENDYEAR));
+	description = attributes[ATTR::DESCRIPTION];
+	setPriority(attributes.at(ATTR::PRIORITY));
+	isDone = Utility::stringToBool(attributes[ATTR::ISDONE]);
+	isDeleted = Utility::stringToBool(attributes[ATTR::ISDELETED]);
+	isImpt = Utility::stringToBool(attributes[ATTR::ISDELETED]);
+	hasDate = Utility::stringToBool(attributes[ATTR::HASDATE]);
+	hasExpired = Utility::stringToBool(attributes[ATTR::HASEXPIRED]);
+}
+                                                                                
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+/* getters */
+string Task::getStartYear() {
+	if (Utility::isEmpty(startYear)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(startYear);
+}
+string Task::getStartMonth() {
+	if (Utility::isEmpty(startMonth)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(startMonth);
+}
+string Task::getStartDay() {
+	if (Utility::isEmpty(startDay)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(startDay);
+}
+string Task::getStartHour() {
+	if (Utility::isEmpty(startHour)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(startHour);
+}
+string Task::getStartMinute() {
+	if (Utility::isEmpty(startMinute)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	if (Utility::isZero(startMinute)) {
+		return Task::ZERO_MINUTES;
+	}
+	if (Utility::isLessThanTen(startMinute)) {
+		string s = "0";
+		s.append(to_string(startMinute));
+		return s;
+	}
+	return to_string(startMinute);
+}
+string Task::getEndYear() {
+	if (Utility::isEmpty(endYear)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(endYear);
+}
+string Task::getEndMonth() {
+	if (Utility::isEmpty(endMonth)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(endMonth);
+}
+string Task::getEndDay() {
+	if (Utility::isEmpty(endDay)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(endDay);
+}
+string Task::getEndHour() {
+	if (Utility::isEmpty(endHour)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(endHour);
+}
+string Task::getEndMinute() {
+	if (Utility::isEmpty(endMinute)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	if (Utility::isZero(endMinute)) {
+		return Task::ZERO_MINUTES;
+	}
+	if (Utility::isLessThanTen(endMinute)) {
+		string s = "0";
+		s.append(to_string(endMinute));
+		return s;
+	}
+	return to_string(endMinute);
+}
+string Task::getPriority() {
+	if (Utility::isEmpty(priority)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	return to_string(priority);
+}
+string Task::getName() {
+	return name;
+}
+string Task::getDescription() {
+	return description;
+}
+string Task::getLocation() {
+	return location;
+}
+string Task::getIsDone() {
+	return Utility::boolToString(isDone);
+}
+string Task::getIsDoneForDisplay() {
+	if (isDone) {
+		return Task::VALUE_TRUE_FOR_DISPLAY;
+	}
+	return Task::VALUE_FALSE_FOR_DISPLAY;
+}
+string Task::getIsDeleted() {
+	return Utility::boolToString(isDeleted);
+}
+string Task::getIsImpt() {
+	return Utility::boolToString(isImpt);
+}
+string Task::getHasDate() {
+	return Utility::boolToString(hasDate);
+}
+string Task::getHasExpired() {
+	return Utility::boolToString(hasExpired);
+}
+string Task::getHasExpiredForDisplay() {
+	if (hasExpired) {
+		return Task::VALUE_TRUE_FOR_DISPLAY;
+	}
+	return Task::VALUE_FALSE_FOR_DISPLAY;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+vector<string> Task::getAttributes() {
+	vector<string> attributes(ATTR::SIZE);
+
+	attributes[ATTR::NAME] = getName();
+	attributes[ATTR::LOCATION] = getLocation();
+	attributes[ATTR::STARTHOUR] = getStartHour();
+	attributes[ATTR::STARTMINUTE] = getStartMinute();
+	attributes[ATTR::STARTDAY] = getStartDay();
+	attributes[ATTR::STARTMONTH] = getStartMonth();
+	attributes[ATTR::STARTYEAR] = getStartYear();
+	attributes[ATTR::ENDHOUR] = getEndHour();
+	attributes[ATTR::ENDMINUTE] = getEndMinute();
+	attributes[ATTR::ENDDAY] = getEndDay();
+	attributes[ATTR::ENDMONTH] = getEndMonth();
+	attributes[ATTR::ENDYEAR] = getEndYear();
+	attributes[ATTR::DESCRIPTION] = getDescription();
+	attributes[ATTR::PRIORITY] = getPriority();
+	attributes[ATTR::ISDONE] = getIsDone();
+	attributes[ATTR::ISDELETED] = Utility::boolToString(isDeleted);
+	attributes[ATTR::HASDATE] = getHasDate();
+	attributes[ATTR::HASEXPIRED] = getHasExpired();
+
+	return attributes;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+/* returns a vector filled with attributes of the task to be displayed, such as:
+   Start Hour: 15
+*/
+vector<string> Task::getAttributesForDisplay() {
+	vector<string> attributes(ATTR::SIZE);
+
+	if (Utility::areEqual(getName(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::NAME] = Task::NAME_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::NAME] = Task::NAME_STR + Task::ATTR_SEPARATOR + getName();
+	}
+	if (Utility::areEqual(getLocation(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::LOCATION] = Task::LOCATION_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::LOCATION] = Task::LOCATION_STR + Task::ATTR_SEPARATOR + getLocation();
+	}
+	if (Utility::areEqual(getStartHour(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::STARTHOUR] = Task::STARTHOUR_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::STARTHOUR] = Task::STARTHOUR_STR + Task::ATTR_SEPARATOR + getStartHour();
+	}
+	if (Utility::areEqual(getStartMinute(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::STARTMINUTE] = Task::STARTMINUTE_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::STARTMINUTE] = Task::STARTMINUTE_STR + Task::ATTR_SEPARATOR + getStartMinute();
+	}
+	if (Utility::areEqual(getStartDay(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::STARTDAY] = Task::STARTDAY_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::STARTDAY] = Task::STARTDAY_STR + Task::ATTR_SEPARATOR + getStartDay();
+	}
+	if (Utility::areEqual(getStartMonth(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::STARTMONTH] = Task::STARTMONTH_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::STARTMONTH] = Task::STARTMONTH_STR + Task::ATTR_SEPARATOR + getStartMonth();
+	}
+	if (Utility::areEqual(getStartYear(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::STARTYEAR] = Task::STARTYEAR_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::STARTYEAR] = Task::STARTYEAR_STR + Task::ATTR_SEPARATOR + getStartYear();
+	}
+	if (Utility::areEqual(getEndHour(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::ENDHOUR] = Task::ENDHOUR_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::ENDHOUR] = Task::ENDHOUR_STR + Task::ATTR_SEPARATOR + getEndHour();
+	}
+	if (Utility::areEqual(getEndMinute(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::ENDMINUTE] = Task::ENDMINUTE_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::ENDMINUTE] = Task::ENDMINUTE_STR + Task::ATTR_SEPARATOR + getEndMinute();
+	}
+	if (Utility::areEqual(getEndDay(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::ENDDAY] = Task::ENDDAY_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::ENDDAY] = Task::ENDDAY_STR + Task::ATTR_SEPARATOR + getEndDay();
+	}
+	if (Utility::areEqual(getEndMonth(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::ENDMONTH] = Task::ENDMONTH_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::ENDMONTH] = Task::ENDMONTH_STR + Task::ATTR_SEPARATOR + getEndMonth();
+	}
+	if (Utility::areEqual(getEndYear(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::ENDYEAR] = Task::ENDYEAR_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::ENDYEAR] = Task::ENDYEAR_STR + Task::ATTR_SEPARATOR + getEndYear();
+	}
+	if (Utility::areEqual(getDescription(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::DESCRIPTION] = Task::DESCRIPTION_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::DESCRIPTION] = Task::DESCRIPTION_STR + Task::ATTR_SEPARATOR + getDescription();
+	}
+	if (Utility::areEqual(getPriority(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::PRIORITY] = Task::PRIORITY_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::PRIORITY] = Task::PRIORITY_STR + Task::ATTR_SEPARATOR + getPriority();
+	}
+	if (Utility::areEqual(getIsDone(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::ISDONE] = Task::ISDONE_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::ISDONE] = Task::ISDONE_STR + Task::ATTR_SEPARATOR + getIsDoneForDisplay();
+	}
+	if (Utility::areEqual(getIsDeleted(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::ISDELETED] = Task::STRING_NOT_EXIST;
+	} else {
+		attributes[ATTR::ISDELETED] = Task::STRING_NOT_EXIST;
+	}
+	if (Utility::areEqual(getHasDate(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::HASDATE] = Task::STRING_NOT_EXIST;
+	} else {
+		attributes[ATTR::HASDATE] = Task::STRING_NOT_EXIST;
+	}
+	if (Utility::areEqual(getHasExpired(), Task::STRING_NOT_EXIST)) {
+		attributes[ATTR::HASEXPIRED] = Task::HASEXPIRED_STR + Task::ATTR_SEPARATOR;
+	} else {
+		attributes[ATTR::HASEXPIRED] = Task::HASEXPIRED_STR + Task::ATTR_SEPARATOR + getHasExpiredForDisplay();
+	}
+
+	return attributes;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+/* setters */
+void Task::setStartYear(string sy) {
+	if (Utility::isEmpty(sy)) {
+		startYear = Task::INT_NOT_EXIST;
+	}
+	else {
+		startYear = stoi(sy);
+	}
+}
+void Task::setStartMonth(string sm){
+	if (Utility::isEmpty(sm)) {
+		startMonth = Task::INT_NOT_EXIST;
+	}
+	else {
+		startMonth = stoi(sm);
+	}
+}
+void Task::setStartDay(string sd) {
+	if (Utility::isEmpty(sd)) {
+		startDay = Task::INT_NOT_EXIST;
+	}
+	else {
+		startDay = stoi(sd);
+	}
+}
+void Task::setStartHour(string sh) {
+	if (Utility::isEmpty(sh)) {
+		startHour = Task::INT_NOT_EXIST;
+	}
+	else {
+		startHour = stoi(sh);
+	}
+}
+void Task::setStartMinute(string sm) {
+	if (Utility::isEmpty(sm)) {
+		startMinute = Task::INT_NOT_EXIST;
+	}
+	else {
+		startMinute = stoi(sm);
+	}
+}
+void Task::setEndYear(string ey) {
+	if (Utility::isEmpty(ey)) {
+		endYear = Task::INT_NOT_EXIST;
+	}
+	else {
+		endYear = stoi(ey);
+	}
+}
+void Task::setEndMonth(string em) {
+	if (Utility::isEmpty(em)) {
+		endMonth = Task::INT_NOT_EXIST;
+	}
+	else {
+		endMonth = stoi(em);
+	}
+}
+void Task::setEndDay(string ed) {
+	if (Utility::isEmpty(ed)) {
+		endDay = Task::INT_NOT_EXIST;
+	}
+	else {
+		endDay = stoi(ed);
+	}
+}
+void Task::setEndHour(string eh) {
+	if (Utility::isEmpty(eh)) {
+		endHour = Task::INT_NOT_EXIST;
+	}
+	else {
+		endHour = stoi(eh);
+	}
+}
+void Task::setEndMinute(string em) {
+	if (Utility::isEmpty(em)) {
+		endMinute = Task::INT_NOT_EXIST;
+	}
+	else {
+		endMinute = stoi(em);
+	}
+}
+void Task::setDateAndTime(vector<string> dateAndTime) {
+	setStartYear(dateAndTime.at(DATE_ENUM::DATE_ENUM::STARTYEAR));
+	setStartMonth(dateAndTime.at(DATE_ENUM::DATE_ENUM::STARTMONTH));
+	setStartDay(dateAndTime.at(DATE_ENUM::DATE_ENUM::STARTDAY));
+	setStartHour(dateAndTime.at(DATE_ENUM::DATE_ENUM::STARTHOUR));
+	setStartMinute(dateAndTime.at(DATE_ENUM::DATE_ENUM::STARTMINUTE));
+	setEndYear(dateAndTime.at(DATE_ENUM::DATE_ENUM::ENDYEAR));
+	setEndMonth(dateAndTime.at(DATE_ENUM::DATE_ENUM::ENDMONTH));
+	setEndDay(dateAndTime.at(DATE_ENUM::DATE_ENUM::ENDDAY));
+	setEndHour(dateAndTime.at(DATE_ENUM::DATE_ENUM::ENDHOUR));
+	setEndMinute(dateAndTime.at(DATE_ENUM::DATE_ENUM::ENDMINUTE));
+	setIsDone(dateAndTime.at(DATE_ENUM::DATE_ENUM::ISDONE));
+	setHasDate(dateAndTime.at(DATE_ENUM::DATE_ENUM::HASDATE));
+	setHasExpired(dateAndTime.at(DATE_ENUM::DATE_ENUM::HASEXPIRED));
+}
+void Task::setPriority(string p) {
+	if (Utility::isEmpty(p)) {
+		priority = Task::INT_NOT_EXIST;
+	}
+	else {
+		priority = stoi(p);
+		if (priority <= 0) {
+			priority = Task::INT_NOT_EXIST;
+		}
+	}
+}
+void Task::setName(string n) {
+	name = n;
+}
+void Task::setDescription(string d) {
+	description = d;
+}
+void Task::setLocation(string l) {
+	location = l;
+}
+void Task::setIsDone() {
+	isDone = true;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+void Task::setIsDone(string done) {
+	isDone = Utility::stringToBool(done);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+void Task::setHasDate(string d) {
+	hasDate = Utility::stringToBool(d);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+void Task::setHasExpired(string expired) {
+	hasExpired = Utility::stringToBool(expired);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+void Task::setAttributes(vector<string> attributes) {
+	setStartYear(attributes[ATTR::STARTYEAR]);
+	setStartMonth(attributes[ATTR::STARTMONTH]);
+	setStartDay(attributes[ATTR::STARTDAY]);
+	setStartHour(attributes[ATTR::STARTHOUR]);
+	setStartMinute(attributes[ATTR::STARTMINUTE]);
+	setEndYear(attributes[ATTR::ENDYEAR]);
+	setEndMonth(attributes[ATTR::ENDMONTH]);
+	setEndDay(attributes[ATTR::ENDDAY]);
+	setEndHour(attributes[ATTR::ENDHOUR]);
+	setEndMinute(attributes[ATTR::ENDMINUTE]);
+	setPriority(attributes[ATTR::PRIORITY]);
+	setName(attributes[ATTR::NAME]);
+	setDescription(attributes[ATTR::DESCRIPTION]);
+	setLocation(attributes[ATTR::LOCATION]);
+	setIsDone(attributes[ATTR::ISDONE]);
+	setIsDeleted(attributes[ATTR::ISDELETED]);
+	setHasDate(attributes[ATTR::HASDATE]);
+	setHasExpired(attributes[ATTR::HASEXPIRED]);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getTime() {
+	string start;
+	string end;
+	string time;
+
+	start = getStartTime();
+	end = getEndTime();
+	time = formatStartEndTime(start, end);
+
+	return time;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getStartTime() {
+	string sH;
+	string sM;
+	string startTime;
+
+	if (Utility::isEmpty(getStartHour()) && Utility::isEmpty(getStartMinute())) {
+		sH = Task::STRING_NOT_EXIST;
+		sM = Task::STRING_NOT_EXIST;
+	}
+	else if (Utility::isEmpty(getStartHour())) {
+		sH = Task::DISPLAY_HOUR_NOT_SPECIFIED;
+		sM = getStartMinute();
+	}
+	else if (Utility::isEmpty(getStartMinute())) {
+		sH = getStartHour();
+		sM = Task::DISPLAY_MINUTES_NOT_SPECIFIED;
+	}
+	else {
+		sH = getStartHour();
+		sM = getStartMinute();
+	}
+
+	startTime = formatTime(sH, sM);
+
+	return startTime;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getEndTime() {
+	string eH;
+	string eM;
+	string endTime;
+
+	if (Utility::isEmpty(getEndHour()) && Utility::isEmpty(getEndMinute())) {
+		eH = Task::STRING_NOT_EXIST;
+		eM = Task::STRING_NOT_EXIST;
+	}
+	else if (Utility::isEmpty(getEndHour())) {
+		eH = Task::DISPLAY_HOUR_NOT_SPECIFIED;
+		eM = getEndMinute();
+	}
+	else if (Utility::isEmpty(getEndMinute())) {
+		eH = getEndHour();
+		eM = Task::DISPLAY_MINUTES_NOT_SPECIFIED;
+	}
+	else {
+		eH = getEndHour();
+		eM = getEndMinute();
+	}
+
+	endTime = formatTime(eH, eM);
+
+	return endTime;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::formatTime(string h, string m) {
+	string t;
+
+	if (Utility::isEmpty(h) && Utility::isEmpty(m)) {
+		t = Task::DISPLAY_TIME_NOT_SPECIFIED;
+		return t;
+	}
+	else {
+		t = h + Task::TIME_SEPARATOR_ENGLISH + m;
+	}
+
+	return t;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::formatStartEndTime(string s, string e) {
+	if (Task::isNonSpecifiedTime(e)) {
+		return s;
+	}
+	string t;
+	t = s + Task::TIME_RANGE_SEPARATOR + e;
+	return t;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+/* this method is the one creating the final string that displays the tasks with the 'view' command */
+string Task::getDisplay() {
+	string date;
+	string loc;
+	string name;
+	string priority;
+	string done;
+	string time;
+	string toDisplay;
+
+	name = getDisplayName();
+
+	loc = getDisplayLocation();
+
+	time = getDisplayTime();
+
+	date = getDisplayDate();
+
+	priority = getDisplayPriority();
+
+	done = getDisplayDone();
+
+	toDisplay = Task::concatenateDisplayAttributes(name, loc, time, date, priority, done);
+
+	return toDisplay;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::concatenateDisplayAttributes(string name, string loc, string time, string date, string priority, string done) {
+	string toDisplay;
+
+	toDisplay = name;
+
+	if (!Utility::isEmpty(loc)) {
+		string l = Task::DISPLAY_KEY_LOC + loc;
+		toDisplay.append(l);
+	}
+
+	if (!Utility::isEmpty(time)) {
+		string t;
+		if (Utility::isContained(Task::TIME_RANGE_SEPARATOR, time)) {
+			t = Task::DISPLAY_KEY_TIME_RANGE + time;
+			toDisplay.append(t);
+		} else {
+			t = Task::DISPLAY_KEY_TIME + time;
+			toDisplay.append(t);
+		}
+	}
+
+	if (!Utility::isEmpty(date)) {
+		string d;
+		if (Utility::isContained(Task::DATE_RANGE_SEPARATOR, date)) {
+			d = Task::DISPLAY_KEY_DATE_RANGE + date;
+			toDisplay.append(d);
+		} else {
+			d = Task::DISPLAY_KEY_DATE + date;
+			toDisplay.append(d);
+		}
+	}
+
+	if (!Utility::isEmpty(priority)) {
+		toDisplay.append(priority);
+	}
+
+	if (!Utility::isEmpty(done)) {
+		toDisplay.append(done);
+	}
+
+	return toDisplay;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getDisplayDone() {
+	string done;
+
+	if (isDone) {
+		done = " [" + Task::ISDONE_ALERT + "]";
+	} else {
+		done = Task::STRING_NOT_EXIST;
+	}
+
+	return done;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getDisplayName() {
+	string name;
+
+	if (Utility::isEmpty(getName())) {
+		name = Task::DISPLAY_NAME_NOT_SPECIFIED;
+	}
+	else {
+		name = getName();
+	}
+
+	return name;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getDisplayPriority() {
+	string priority;
+
+	if (Utility::isEmpty(getPriority())) {
+		priority = Task::STRING_NOT_EXIST;
+	} else {
+		priority = " [" + getPriority() + "]";
+	}
+	return priority;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getDisplayLocation() {
+	string loc;
+
+	if (Utility::isEmpty(getLocation())) {
+		loc = Task::STRING_NOT_EXIST;
+	} else {
+		loc = getLocation();
+	}
+
+	return loc;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getDisplayTime() {
+	string time;
+
+	if (Task::isNonSpecifiedTime(getTime())) {
+		time = Task::STRING_NOT_EXIST;
+	}
+	else {
+		time = getTime();
+	}
+
+	return time;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getDisplayDate() {
+	string date;
+
+	if (Task::isNonSpecifiedDate(getDate())) {
+		date = Task::STRING_NOT_EXIST;
+	}
+	else {
+		date = getDate();
+	}
+
+	return date;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getDate() {
+	string startDate;
+	string endDate;
+	string date;
+
+	startDate = getStartDate();
+	endDate = getEndDate();
+	date = formatStartEndDate(startDate, endDate);
+
+	return date;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getStartDate() {
+	string d;
+	string m;
+	string y;
+	string startDate;
+
+	if (Utility::isEmpty(getStartDay())) {
+		d = Task::DISPLAY_DATE_ATTR_NOT_SPECIFIED;
+	} else {
+		d = getStartDay();
+	}
+	if (Utility::isEmpty(getStartMonth())) {
+		m = Task::DISPLAY_DATE_ATTR_NOT_SPECIFIED;
+	} else {
+		m = getStartMonth();
+	}
+	if (Utility::isEmpty(getStartYear())) {
+		y = Task::DISPLAY_DATE_ATTR_NOT_SPECIFIED;
+	} else {
+		y = getStartYear();
+	}
+	
+	startDate = formatDate(d, m, y);
+
+	return startDate;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::getEndDate() {
+	string d;
+	string m;
+	string y;
+	string endDate;
+
+	if (Utility::isEmpty(getEndDay())) {
+		d = Task::DISPLAY_DATE_ATTR_NOT_SPECIFIED;
+	}
+	else {
+		d = getEndDay();
+	}
+	if (Utility::isEmpty(getEndMonth())) {
+		m = Task::DISPLAY_DATE_ATTR_NOT_SPECIFIED;
+	}
+	else {
+		m = getEndMonth();
+	}
+	if (Utility::isEmpty(getEndYear())) {
+		y = Task::DISPLAY_DATE_ATTR_NOT_SPECIFIED;
+	}
+	else {
+		y = getEndYear();
+	}
+
+	endDate = formatDate(d, m, y);
+
+	return endDate;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::formatDate(string d, string m, string y) {
+	string formattedDate;
+
+	formattedDate = d + Task::DATE_SEPARATOR_ENGLISH + m + Task::DATE_SEPARATOR_ENGLISH + y;
+
+	return formattedDate;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+string Task::formatStartEndDate(string s, string e) {
+	string date;
+
+	if (Task::isNonSpecifiedDate(s) && Task::isNonSpecifiedDate(e)) {
+		date = Task::DISPLAY_DATE_NOT_SPECIFIED;
+	} else if (Task::isNonSpecifiedDate(e)) {
+		date = s;
+	} else {
+		date = s + Task::DATE_RANGE_SEPARATOR + e;
+	}
+
+	return date;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isNonSpecifiedHour(string t) {
+	if (t.compare(Task::DISPLAY_HOUR_NOT_SPECIFIED) == 0) {
+		return true;
+	}
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isNonSpecifiedTime(string t) {
+	if (t.compare(Task::DISPLAY_TIME_NOT_SPECIFIED) == 0) {
+		return true;
+	}
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isNonSpecifiedDate(string d) {
+	if (d.compare(Task::DISPLAY_DATE_NOT_SPECIFIED) == 0) {
+		return true;
+	}
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidTime(vector<string> userInputParsed) {
+	bool sH = isValidStartHour(userInputParsed);
+	bool sM = isValidStartMinute(userInputParsed);
+	bool eH = isValidEndHour(userInputParsed);
+	bool eM = isValidEndMinute(userInputParsed);
+	if (sH && sM && eH && eM) {
+		return true;
+	}
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidStartHour(vector<string> userInputParsed) {
+	string sH = userInputParsed.at(Task::ATTR::STARTHOUR);
+
+	if (Utility::isEmpty(sH)) {
+		return true;
+	}
+
+	int hour;
+	try {
+		hour = stoi(sH);
+	} catch (exception &) {
+		Utility::showToUser(Task::ERROR_STARTHOUR);
+		return false;
+	}
+
+	if (!isValidHour(hour)) {
+		Utility::showToUser(Task::ERROR_STARTHOUR);
+		return false;
+	}
+
+	return true;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidStartMinute(vector<string> userInputParsed) {
+	string sM = userInputParsed.at(Task::ATTR::STARTMINUTE);
+
+	if (Utility::isEmpty(sM)) {
+		return true;
+	}
+
+	int minute;
+	try {
+		minute = stoi(sM);
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_STARTMINUTE);
+		return false;
+	}
+
+	if (!isValidMinute(minute)) {
+		Utility::showToUser(Task::ERROR_STARTMINUTE);
+		return false;
+	}
+
+	return true;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidEndHour(vector<string> userInputParsed) {
+	string eH = userInputParsed.at(Task::ATTR::ENDHOUR);
+
+	if (Utility::isEmpty(eH)) {
+		return true;
+	}
+
+	int hour;
+	try {
+		hour = stoi(eH);
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_ENDHOUR);
+		return false;
+	}
+
+	if (!isValidHour(hour)) {
+		Utility::showToUser(Task::ERROR_ENDHOUR);
+		return false;
+	}
+
+	//check if dates are the same to compare time on a same day
+	if (Task::isSameStartEndDate(userInputParsed)) {
+		//assert? not supposed to be used before checking starthour validity
+		int sH;
+		try {
+			sH = stoi(userInputParsed.at(Task::ATTR::STARTHOUR));
+		}
+		catch (exception &) {
+			return true;
+		}
+		if (sH <= hour) {
+			return true;
+		}
+	} else if (Task::isGreaterEndDate(userInputParsed)) {
+		return true;
+	}
+	Utility::showToUser(Task::ERROR_ENDDATE);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidEndMinute(vector<string> userInputParsed) {
+	string eM = userInputParsed.at(Task::ATTR::ENDMINUTE);
+
+	if (Utility::isEmpty(eM)) {
+		return true;
+	}
+
+	int minute;
+	try {
+		minute = stoi(eM);
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_ENDMINUTE);
+		return false;
+	}
+
+	if (!isValidMinute(minute)) {
+		Utility::showToUser(Task::ERROR_ENDMINUTE);
+		return false;
+	}
+
+	//check if dates are the same to compare time on a same day
+	if (isSameStartEndDate(userInputParsed)) {
+		//assert? not supposed to be used before checking starthour validity
+		//dont check for hour since it should be checked earlier
+		int sM;
+		try {
+			sM = stoi(userInputParsed.at(Task::ATTR::STARTMINUTE));
+		}
+		catch (exception &) {
+			return true;
+		}
+		if (sM <= minute) {
+			return true;
+		}
+	} else if (Task::isGreaterEndDate(userInputParsed)) {
+		return true;
+	}
+	Utility::showToUser(Task::ERROR_ENDDATE);
+	return true;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isSameStartEndDate(vector<string> userInputParsed) {
+	if (!Task::isValidDate(userInputParsed)) {
+		return false;
+	}
+	int sY = stoi(userInputParsed.at(Task::ATTR::STARTYEAR));
+	int sM = stoi(userInputParsed.at(Task::ATTR::STARTMONTH));
+	int sD = stoi(userInputParsed.at(Task::ATTR::STARTDAY));
+	try {
+		int eY = stoi(userInputParsed.at(Task::ATTR::ENDYEAR));
+		int eM = stoi(userInputParsed.at(Task::ATTR::ENDMONTH));
+		int eD = stoi(userInputParsed.at(Task::ATTR::ENDDAY));
+
+		if (sY == eY && sM == eM && sD == eD) {
+			return true;
+		}
+	} catch (exception &) {
+		if (Utility::isEmpty(userInputParsed.at(Task::ATTR::ENDYEAR)) &&
+			Utility::isEmpty(userInputParsed.at(Task::ATTR::ENDMONTH)) &&
+			Utility::isEmpty(userInputParsed.at(Task::ATTR::ENDDAY))) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+//code duplication with method above (same start end date), could be more efficient
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isGreaterEndDate(vector<string> userInputParsed) {
+	if (!Task::isValidDate(userInputParsed)) {
+		return false;
+	}
+	int sY = stoi(userInputParsed.at(Task::ATTR::STARTYEAR));
+	int sM = stoi(userInputParsed.at(Task::ATTR::STARTMONTH));
+	int sD = stoi(userInputParsed.at(Task::ATTR::STARTDAY));
+	try {
+		int eY = stoi(userInputParsed.at(Task::ATTR::ENDYEAR));
+		int eM = stoi(userInputParsed.at(Task::ATTR::ENDMONTH));
+		int eD = stoi(userInputParsed.at(Task::ATTR::ENDDAY));
+
+		if (sY < eY) {
+			return true;
+		}
+		else if (sY == eY) {
+			if (sM < eM) {
+				return true;
+			}
+			else if (sM == eM) {
+				if (sD < eD) {
+					return true;
+				}
+			}
+		}
+	}
+	catch (exception &) {
+		if (Utility::isEmpty(userInputParsed.at(Task::ATTR::ENDYEAR)) &&
+			Utility::isEmpty(userInputParsed.at(Task::ATTR::ENDMONTH)) &&
+			Utility::isEmpty(userInputParsed.at(Task::ATTR::ENDDAY))) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidDate(vector<string> userInputParsed) {
+	//check start year validity
+	bool sY = isValidStartYear(userInputParsed.at(Task::ATTR::STARTYEAR));
+	if (!sY) {
+		return false;
+	}
+
+	//check end year validity
+	bool eY = isValidEndYear(userInputParsed.at(Task::ATTR::ENDYEAR),
+		userInputParsed.at(Task::ATTR::STARTYEAR));
+	if (!eY) {
+		return false;
+	}
+
+	//check start month validity
+	bool sM = isValidStartMonth(userInputParsed.at(Task::ATTR::STARTMONTH),
+		userInputParsed.at(Task::ATTR::STARTYEAR));
+	if (!sM) {
+		return false;
+	}
+
+	//check end month validity
+	bool eM = isValidEndMonth(userInputParsed.at(Task::ATTR::ENDMONTH),
+		userInputParsed.at(Task::ATTR::ENDYEAR),
+		userInputParsed.at(Task::ATTR::STARTMONTH),
+		userInputParsed.at(Task::ATTR::STARTYEAR));
+	if (!eM) {
+		return false;
+	}
+
+	//check start day validity
+	bool sD = isValidStartDay(userInputParsed.at(Task::ATTR::STARTDAY),
+		userInputParsed.at(Task::ATTR::STARTMONTH),
+		userInputParsed.at(Task::ATTR::STARTYEAR));
+	if (!sD) {
+		return false;
+	}
+
+	//check end day validity
+	bool eD = isValidEndDay(userInputParsed.at(Task::ATTR::ENDDAY),
+		userInputParsed.at(Task::ATTR::ENDMONTH),
+		userInputParsed.at(Task::ATTR::ENDYEAR),
+		userInputParsed.at(Task::ATTR::STARTDAY),
+		userInputParsed.at(Task::ATTR::STARTMONTH),
+		userInputParsed.at(Task::ATTR::STARTYEAR));
+	if (!eD) {
+		return false;
+	}
+	
+	return true;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidStartDay(string sD, string sM, string sY) {
+	if (Utility::isEmpty(sD)) {
+		return true;
+	}
+
+	int day;
+	int month;
+	int year;
+	try {
+		day = stoi(sD);
+		month = stoi(sM);
+		year = stoi(sY);
+		if (isValidDay(day, month, year)) {
+			return true;
+		}
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_STARTDAY);
+		return false;
+	}
+
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidStartMonth(string sM, string sY) {
+	if (Utility::isEmpty(sM)) {
+		return true;
+	}
+
+	int month;
+	try {
+		month = stoi(sM);
+		if (isValidMonth(month)) {
+			return true;
+		}
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_STARTMONTH);
+		return false;
+	}
+	Utility::showToUser(Task::ERROR_STARTMONTH);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidStartYear(string sY) {
+	if (Utility::isEmpty(sY)) {
+		return true;
+	}
+
+	int year;
+	try {
+		year = stoi(sY);
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_STARTYEAR);
+		return false;
+	}
+	return true;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidEndDay(string eD, string eM, string eY, string sD, string sM, string sY) {
+	if (Utility::isEmpty(eD)) {
+		return true;
+	}
+
+	int day;
+	int month;
+	int year;
+	try {
+		day = stoi(eD);
+		month = stoi(eM);
+		year = stoi(eY);
+	} catch (exception &) {
+		Utility::showToUser(Task::ERROR_ENDDAY);
+		return false;
+	}
+
+	int sDay;
+	int sMonth;
+	int sYear;
+	//for "by date do something" format
+	try {
+		sDay = stoi(sD);
+		sMonth = stoi(sM);
+		sYear = stoi(sY);
+	}
+	catch (exception &) {
+		if (isValidDay(day, month, year)) {
+			return true;
+		}
+	}
+
+	try {
+		day = stoi(eD);
+		month = stoi(eM);
+		year = stoi(eY);
+		if (isValidDay(day, month, year)) {
+			if (sYear >= year && sMonth >= month && sDay > day) {
+				Utility::showToUser(Task::ERROR_ENDDAY);
+				return false;
+			}
+			return true;
+		}
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_ENDDAY);
+		return false;
+	}
+	Utility::showToUser(Task::ERROR_ENDDAY);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidEndMonth(string eM, string eY, string sM, string sY) {
+	if (Utility::isEmpty(eM)) {
+		return true;
+	}
+
+	int month;
+	int year;
+	try {
+		month = stoi(eM);
+		year = stoi(eY);
+	} catch (exception &) {
+		if (isValidMonth(month)) {
+			return true;
+		}
+	}
+
+	int sMonth;
+	int sYear;
+	try {
+		sMonth = stoi(sM);
+		sYear = stoi(sY);
+	}
+	catch (exception &) {
+		if (isValidMonth(month)) {
+			return true;
+		}
+		return false;
+	}
+
+	try {
+		if (isValidMonth(month)) {
+			if (sYear >= year && sMonth > month) {
+				Utility::showToUser(Task::ERROR_ENDMONTH);
+				return false;
+			}
+			return true;
+		}
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_ENDMONTH);
+		return false;
+	}
+	Utility::showToUser(Task::ERROR_ENDMONTH);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidEndYear(string eY, string sY) {
+	if (Utility::isEmpty(eY)) {
+		return true;
+	}
+	int startYear;
+	try {
+		startYear = stoi(sY);
+	} catch (exception &) {
+		return true;
+	}
+
+	int year;
+	try {
+		year = stoi(eY);
+		if (startYear <= year) {
+			return true;
+		}
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_ENDYEAR);
+		return false;
+	}
+	Utility::showToUser(Task::ERROR_ENDYEAR);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidHour(int h) {
+	if (h >= 0 && h <= 23) {
+		return true;
+	}
+	Utility::showToUser(Task::ERROR_HOUR);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidMinute(int m) {
+	if (m >= 0 && m <= 59) {
+		return true;
+	}
+	Utility::showToUser(Task::ERROR_MINUTE);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidDay(int d, int m, int y) {
+	if (d >= 1 && d <= 31) {
+
+		//months of less than 31 days
+		if (d == 31 && (m == 4 || m == 6 || m == 9 || m == 11)) {
+			Utility::showToUser(Task::ERROR_DAY_31);
+			return false;
+		}
+
+		//february
+		if (m == 2) {
+			if (d == 29 && (y % 4 == 0)) { //leap year
+				return true;
+			} else if (d > 28) {
+				Utility::showToUser(Task::ERROR_DAY_FEB);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	Utility::showToUser(Task::ERROR_DAY);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidMonth(int m) {
+	if (m >= 1 && m <= 12) {
+		return true;
+	}
+	Utility::showToUser(Task::ERROR_MONTH);
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+bool Task::isValidPriority(string priority) {
+	if (Utility::isEmpty(priority)) {
+		return true;
+	}
+
+	int p;
+	try {
+		p = stoi(priority);
+	}
+	catch (exception &) {
+		Utility::showToUser(Task::ERROR_PRIORITY);
+		return false;
+	}
+	return true;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.h
+	 */
+
+/*
+A core class of KeepUp. It initializes enumerations for consistancy throughout the whole classes.
+It constructs tasks.
+Everything is converted to proper type for virtual storage and back to string
+for the programmer's ease. It is responsible of display format for user's ease of reading
+and contains a lot of error messages and validity methods to make sure tasks are
+constructed properly for good interaction later on.
+*/
+#ifndef TASK_H
+#define TASK_H
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Task {
+public:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.h
+	 */
+
+	/* some attributes to be displayed to the user */
+	static const string STARTYEAR_STR;
+	static const string STARTMONTH_STR;
+	static const string STARTDAY_STR;
+	static const string STARTHOUR_STR;
+	static const string STARTMINUTE_STR;
+	static const string ENDYEAR_STR;
+	static const string ENDMONTH_STR;
+	static const string ENDDAY_STR;
+	static const string ENDHOUR_STR;
+	static const string ENDMINUTE_STR;
+	static const string PRIORITY_STR;
+	static const string NAME_STR;
+	static const string DESCRIPTION_STR;
+	static const string LOCATION_STR;
+	static const string ISDONE_STR;
+	static const string ISDONE_ALERT;
+	static const string ISDELETED_STR;
+	static const string ISDELETED_ALERT;
+	static const string ISIMPT_STR;
+	static const string ISIMPT_ALERT;
+	static const string HASEXPIRED_STR;
+	static const string ATTR_SEPARATOR;
+	static const string VALUE_TRUE_FOR_DISPLAY;
+	static const string VALUE_FALSE_FOR_DISPLAY;
+
+	static const bool Task::TRUE;
+	static const bool Task::FALSE;
+
+	/* config */
+	static const int INT_NOT_EXIST; //-1
+	static const bool BOOL_NOT_EXIST; //false
+	/*many keywords and characters for validity, display and input checking*/
+	static const string DISPLAY_DATE_ATTR_NOT_SPECIFIED;
+	static const string DISPLAY_DATE_NOT_SPECIFIED;
+	static const string DISPLAY_HOUR_NOT_SPECIFIED;
+	static const string DISPLAY_KEY_DATE;
+	static const string DISPLAY_KEY_DATE_RANGE;
+	static const string DISPLAY_KEY_LOC;
+	static const string DISPLAY_KEY_TIME;
+	static const string DISPLAY_KEY_TIME_RANGE;
+	static const string DISPLAY_MINUTES_NOT_SPECIFIED;
+	static const string DISPLAY_NAME_NOT_SPECIFIED;
+	static const string DISPLAY_SPACE;
+	static const string DISPLAY_TIME_NOT_SPECIFIED;
+	static const string STRING_NOT_EXIST; //used to represent an ignored input by the user
+	static const string DATE_RANGE_SEPARATOR;
+	static const string TIME_RANGE_SEPARATOR;
+	static const string DATE_SEPARATOR_ENGLISH;
+	static const string TIME_SEPARATOR_ENGLISH;
+	static const string ZERO_MINUTES;
+
+	/* error messages */
+	static const string ERROR_DAY;
+	static const string ERROR_DAY_31;
+	static const string ERROR_DAY_FEB;
+	static const string ERROR_MONTH;
+	static const string ERROR_HOUR;
+	static const string ERROR_MINUTE;
+	static const string ERROR_ENDDATE;
+	/* more error messages */
+	static const string ERROR_STARTHOUR;
+	static const string ERROR_STARTMINUTE;
+	static const string ERROR_STARTDAY;
+	static const string ERROR_STARTDAY_31;
+	static const string ERROR_STARTMONTH;
+	static const string ERROR_STARTYEAR;
+	static const string ERROR_ENDHOUR;
+	static const string ERROR_ENDHOUR_BEFORE_START;
+	static const string ERROR_ENDMINUTE;
+	static const string ERROR_ENDMINUTE_BEFORE_START;
+	static const string ERROR_ENDDAY;
+	static const string ERROR_ENDDAY_31;
+	static const string ERROR_ENDDAY_BEFORE_START;
+	static const string ERROR_ENDMONTH;
+	static const string ERROR_ENDMONTH_BEFORE_START;
+	static const string ERROR_ENDYEAR;
+	static const string ERROR_ENDYEAR_BEFORE_START;
+	static const string ERROR_PRIORITY;
+
+	/* enum for the vector needed for task constructor */
+	enum ATTR {
+		COMMAND, NAME, LOCATION, STARTHOUR, STARTMINUTE, STARTDAY, STARTMONTH,
+		STARTYEAR, ENDHOUR, ENDMINUTE, ENDDAY, ENDMONTH, ENDYEAR, DESCRIPTION,
+		PRIORITY, ISDONE, ISDELETED, HASDATE, HASEXPIRED, SIZE, ISIMPT
+	};
+
+	/* constructors */
+	Task();
+	Task(vector<string> attributes);
+
+	/* no destructor */
+
+	/* getters */
+	string getStartYear();
+	string getStartMonth();
+	string getStartDay();
+	string getStartHour();
+	string getStartMinute();
+	string getEndYear();
+	string getEndMonth();
+	string getEndDay();
+	string getEndHour();
+	string getEndMinute();
+	string getPriority();
+	string getName();
+	string getDescription();
+	string getLocation();
+	string getIsDone();
+	string getIsDoneForDisplay();
+	string getIsDeleted();
+	string getIsImpt();
+	string getHasDate();
+	string getHasExpired();
+	string getHasExpiredForDisplay();
+
+	/* more getters */
+	string getDisplay();
+	string getEndDate();
+	string getEndTime();
+	string getStartDate();
+	string getStartTime();
+	string getDate();
+	string getTime();
+
+	/* advanced getters */
+	vector<string> getAttributes();
+	vector<string> getAttributesForDisplay();
+
+	/* setters */
+	void setStartYear(string sy);
+	void setStartMonth(string sm);
+	void setStartDay(string sd);
+	void setStartHour(string sh);
+	void setStartMinute(string sm);
+	void setEndYear(string ey);
+	void setEndMonth(string em);
+	void setEndDay(string ed);
+	void setEndHour(string eh);
+	void setEndMinute(string em);
+	void setDateAndTime(vector<string> dateAndTime);
+	void setPriority(string p);
+	void setName(string n);
+	void setDescription(string d);
+	void setLocation(string l);
+	void setIsDone();
+	void setIsDone(string done);
+	void setIsDeleted();
+	void setIsDeleted(string del);
+	void setIsImpt();
+	void setIsImpt(string impt);
+	void setHasDate(string d);
+	void setHasExpired(string expired);
+
+	/* advanced setter */
+	void setAttributes(vector<string> attributes);
+
+	/* validity checkers */
+	static bool isValidTime(vector<string> userInputParsed);
+	static bool isValidStartHour(vector<string> userInputParsed);
+	static bool isValidStartMinute(vector<string> userInputParsed);
+	static bool isValidEndHour(vector<string> userInputParsed);
+	static bool isValidEndMinute(vector<string> userInputParsed);
+	static bool isValidDate(vector<string> userInputParsed);
+	static bool isValidStartDay(string sD, string sM, string sY);
+	static bool isValidStartMonth(string sM, string sY);
+	static bool isValidStartYear(string sY);
+	static bool isValidEndDay(string eD, string eM, string eY, string sD, string sM, string sY);
+	static bool isValidEndMonth(string eM, string eY, string sM, string sY);
+	static bool isValidEndYear(string eY, string sY);
+	static bool isValidPriority(string priority);
+	static bool isSameStartEndDate(vector<string> userInputParsed);
+	static bool isGreaterEndDate(vector<string> userInputParsed);
+
+	/* more validity checkers */
+	static bool isValidHour(int h);
+	static bool isValidMinute(int m);
+	static bool isValidDay(int d, int m, int y);
+	static bool isValidMonth(int m);
+	static bool isValidYear(int y);
+
+private:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.h
+	 */
+
+	/* task attributes */
+	int startYear;
+	int startMonth;
+	int startDay;
+	int startHour;
+	int startMinute;
+	int endYear;
+	int endMonth;
+	int endDay;
+	int endHour;
+	int endMinute;
+	int priority;
+	string name;
+	string description;
+	string location;
+	bool isDone;
+	bool isDeleted;
+	bool isImpt;
+	bool hasDate;
+	bool hasExpired;
+
+	/* task private helper methods*/
+	string concatenateDisplayAttributes(string name, string loc, string time, string date, string priority, string done);
+	string formatStartEndDate(string s, string e);
+	string formatDate(string d, string m, string y);
+	string formatTime(string h, string m);
+	string formatStartEndTime(string s, string e);
+	string getDisplayDate();
+	string getDisplayDone();
+	string getDisplayLocation();
+	string getDisplayName();
+	string getDisplayPriority();
+	string getDisplayTime();
+	static bool isNonSpecifiedHour(string t);
+	static bool isNonSpecifiedTime(string t);
+	static bool isNonSpecifiedDate(string d);
+};
+#endif
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+#include "Utility.h"
+#include <Windows.h>
+
+const int Utility::SAME = 0;
+const string Utility::NUMBER_SEPARATOR = ". ";
+const string Utility::ERROR_ENTER_NUMBER = "Wrong input. Please enter a number.";
+const string Utility::ERROR_YES_NO_ENTRY = "Please enter \"Y\" to confirm, \"n\" to infirm.";
+const string Utility::YES = "Y";
+const string Utility::NO = "n";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* converts the string s to boolean true or false */
+bool Utility::stringToBool(string s) {
+	if (s.compare("true") == 0 || s.compare("True") == 0) {
+		return true;
+	}
+	return false;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* converts a boolean to its string equivalent */
+string Utility::boolToString(bool b) {
+	return b ? "true" : "false";
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* checks if the command is valid and exists by returning true or false */
+bool Utility::isValidCommand(Calendar::COMMAND_TYPE cmd) {
+	return (cmd >= Calendar::COMMAND_TYPE::EXIT && cmd <= Calendar::COMMAND_TYPE::TASKWEATHER);
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+Calendar::COMMAND_TYPE Utility::stringToCOMMAND_TYPE(string command) {
+	if (isExit(command)) {
+		return Calendar::COMMAND_TYPE::EXIT;
+	}
+	if (isAdd(command)) {
+		return Calendar::COMMAND_TYPE::TASKADD;
+	}
+	if (isBlock(command)) {
+		return Calendar::COMMAND_TYPE::TASKBLOCK;
+	}
+	if (isDecorate(command)) {
+		return Calendar::COMMAND_TYPE::TASKDECORATE;
+	}
+	if (isDelete(command)) {
+		return Calendar::COMMAND_TYPE::TASKDELETE;
+	}
+	if (isDone(command)) {
+		return Calendar::COMMAND_TYPE::TASKDONE;
+	}
+	if (isEdit(command)) {
+		return Calendar::COMMAND_TYPE::TASKEDIT;
+	}
+	if (isHelp(command)) {
+		return Calendar::COMMAND_TYPE::HELP;
+	}
+	if (isSave(command)) {
+		return Calendar::COMMAND_TYPE::SAVE;
+	}
+	if (isLoad(command)) {
+		return Calendar::COMMAND_TYPE::LOAD;
+	}
+	if (isPrint(command)) {
+		return Calendar::COMMAND_TYPE::TASKPRINT;
+	}
+	if (isRemind(command)) {
+		return Calendar::COMMAND_TYPE::TASKREMIND;
+	}
+	if (isRepeat(command)) {
+		return Calendar::COMMAND_TYPE::TASKREPEAT;
+	}
+	if (isView(command)) {
+		return Calendar::COMMAND_TYPE::TASKVIEW;
+	}
+	if (isWeather(command)) {
+		return Calendar::COMMAND_TYPE::TASKWEATHER;
+	}
+	if (isUndo(command)) {
+		return Calendar::COMMAND_TYPE::TASKUNDO;
+	}
+	if (isRedo(command)) {
+		return Calendar::COMMAND_TYPE::TASKREDO;
+	}
+	return Calendar::COMMAND_TYPE::TASKINVALID;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+string COMMAND_TYPEToString(Calendar::COMMAND_TYPE cmd) {
+	switch (cmd) {
+	case Calendar::COMMAND_TYPE::EXIT:
+		return Calendar::COMMAND_EXIT;
+	case Calendar::COMMAND_TYPE::TASKADD:
+		return Calendar::COMMAND_ADD;
+	case Calendar::COMMAND_TYPE::TASKBLOCK:
+		return Calendar::COMMAND_BLOCK;
+	case Calendar::COMMAND_TYPE::TASKDECORATE:
+		return Calendar::COMMAND_DECORATE;
+	case Calendar::COMMAND_TYPE::TASKDELETE:
+		return Calendar::COMMAND_DELETE;
+	case Calendar::COMMAND_TYPE::TASKDONE:
+		return Calendar::COMMAND_DONE;
+	case Calendar::COMMAND_TYPE::TASKEDIT:
+		return Calendar::COMMAND_EDIT;
+	case Calendar::COMMAND_TYPE::HELP:
+		return Calendar::COMMAND_HELP;
+	case Calendar::COMMAND_TYPE::SAVE:
+		return Calendar::COMMAND_SAVE;
+	case Calendar::COMMAND_TYPE::LOAD:
+		return Calendar::COMMAND_LOAD;
+	case Calendar::COMMAND_TYPE::TASKPRINT:
+		return Calendar::COMMAND_PRINT;
+	case Calendar::COMMAND_TYPE::TASKREMIND:
+		return Calendar::COMMAND_REMIND;
+	case Calendar::COMMAND_TYPE::TASKREPEAT:
+		return Calendar::COMMAND_REPEAT;
+	case Calendar::COMMAND_TYPE::TASKVIEW:
+		return Calendar::COMMAND_VIEW;
+	case Calendar::COMMAND_TYPE::TASKWEATHER:
+		return Calendar::COMMAND_WEATHER;
+	case Calendar::COMMAND_TYPE::TASKUNDO:
+		return Calendar::COMMAND_UNDO;
+	case Calendar::COMMAND_TYPE::TASKREDO:
+		return Calendar::COMMAND_REDO;
+	default:
+		return Calendar::COMMAND_INVALID;
+	}
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+bool Utility::isExit(string command) {
+	return (command.compare(Calendar::COMMAND_EXIT) == SAME);
+}
+bool Utility::isAdd(string command) {
+	return (command.compare(Calendar::COMMAND_ADD) == SAME);
+}
+bool Utility::isBlock(string command) {
+	return (command.compare(Calendar::COMMAND_BLOCK) == SAME);
+}
+bool Utility::isDecorate(string command) {
+	return (command.compare(Calendar::COMMAND_DECORATE) == SAME);
+}
+bool Utility::isDelete(string command) {
+	return (command.compare(Calendar::COMMAND_DELETE) == SAME);
+}
+bool Utility::isDone(string command) {
+	return (command.compare(Calendar::COMMAND_DONE) == SAME);
+}
+bool Utility::isEdit(string command) {
+	return (command.compare(Calendar::COMMAND_EDIT) == SAME);
+}
+bool Utility::isHelp(string command) {
+	return (command.compare(Calendar::COMMAND_HELP) == SAME);
+}
+bool Utility::isSave(string command) {
+	return (command.compare(Calendar::COMMAND_SAVE) == SAME);
+}
+bool Utility::isLoad(string command) {
+	return (command.compare(Calendar::COMMAND_LOAD) == SAME);
+}
+bool Utility::isPrint(string command) {
+	return (command.compare(Calendar::COMMAND_PRINT) == SAME);
+}
+bool Utility::isRemind(string command) {
+	return (command.compare(Calendar::COMMAND_REMIND) == SAME);
+}
+bool Utility::isRepeat(string command) {
+	return (command.compare(Calendar::COMMAND_REPEAT) == SAME);
+}
+bool Utility::isView(string command) {
+	return (command.compare(Calendar::COMMAND_VIEW) == SAME);
+}
+bool Utility::isWeather(string command) {
+	return (command.compare(Calendar::COMMAND_WEATHER) == SAME);
+}
+bool Utility::isUndo(string command) {
+	return (command.compare(Calendar::COMMAND_UNDO) == SAME);
+}
+bool Utility::isRedo(string command) {
+	return (command.compare(Calendar::COMMAND_REDO) == SAME);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+bool Utility::isAdd(Calendar::COMMAND_TYPE cmd) {
+	if (cmd == Calendar::COMMAND_TYPE::TASKADD) {
+		return true;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* returns true if 'key' is found in 'sentence' */
+bool Utility::isContained(string key, string sentence) {
+	size_t found = sentence.find(key);
+	if (found != std::string::npos) {
+		return true;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* returns true if 's' is equal to the STRING_NOT_EXIST Task constant string */
+bool Utility::isEmpty(string s) {
+	if (s.compare(Task::STRING_NOT_EXIST) == 0) {
+		return true;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+bool Utility::isEmpty(vector<int> v) {
+	if (v.size() == 0) {
+		return true;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* returns true if 'i' is equal to the INT_NOT_EXIST Task constant int */
+bool Utility::isEmpty(int i) {
+	if (i == Task::INT_NOT_EXIST) {
+		return true;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+bool Utility::areEqual(string a, string b) {
+	if (a.compare(b) == SAME) {
+		return true;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* returns true if 'i' is equal to zero */
+bool Utility::isZero(int i) {
+	if (i == 0) {
+		return true;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* returns true if 'i' is less and not equal to 10 */
+bool Utility::isLessThanTen(int i) {
+	if (i < 10) {
+		return true;
+	}
+	return false;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* converts an integer to the EDIT_TYPE enum */
+EDIT_TYPE::EDIT_TYPE intToEDIT_TYPE(int editType) { 
+	switch (editType) {
+	case EDIT_TYPE::EDIT_TYPE::TITLE:
+		return EDIT_TYPE::EDIT_TYPE::TITLE;
+	case EDIT_TYPE::EDIT_TYPE::DATETIME:
+		return EDIT_TYPE::EDIT_TYPE::DATETIME;
+	case EDIT_TYPE::EDIT_TYPE::LOCATION:
+		return EDIT_TYPE::EDIT_TYPE::LOCATION;
+	case EDIT_TYPE::EDIT_TYPE::REMINDER:
+		return EDIT_TYPE::EDIT_TYPE::REMINDER;
+	case EDIT_TYPE::EDIT_TYPE::DESCRIPTION:
+		return EDIT_TYPE::EDIT_TYPE::DESCRIPTION;
+	case EDIT_TYPE::EDIT_TYPE::ATTACHFILE:
+		return EDIT_TYPE::EDIT_TYPE::ATTACHFILE;
+	case EDIT_TYPE::EDIT_TYPE::EVERYTHING:
+		return EDIT_TYPE::EDIT_TYPE::EVERYTHING;
+	default:
+		break;
+	}
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* prints to the terminal everything inside the vector if the content
+   is not equal to STRING_NOT_EXIST
+*/
+void Utility::showToUser(vector<string> strings) {
+	for (int i = 0; i < strings.size(); i++) {
+		if (!Utility::areEqual(strings.at(i), Task::STRING_NOT_EXIST)) {
+			cout << strings.at(i) << endl;
+		}
+	}
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+void Utility::showToUser(string s) {
+	cout << s << endl;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* get the user to type an integer, and loop until input is valid */
+int Utility::getIntFromUser() {
+	string s;
+	int userChoice;
+	bool notFine = true;
+	do {
+		try {
+			getline(cin, s);
+			userChoice = stoi(s);
+			notFine = false;
+		}
+		catch (exception &) {
+			Utility::showToUser(Utility::ERROR_ENTER_NUMBER);
+		}
+	} while (notFine);
+	return userChoice;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* return the command string corresponding to the Help menu choice */
+string Utility::getHelp(int i) {
+	switch (i) {
+	case HELP::HELP::ADD:
+		return Calendar::COMMAND_ADD;
+		break;
+	case HELP::HELP::BLOCK:
+		return Calendar::COMMAND_BLOCK;
+		break;
+	case HELP::HELP::DECORATE:
+		return Calendar::COMMAND_DECORATE;
+		break;
+	case HELP::HELP::DEL:
+		return Calendar::COMMAND_DELETE;
+		break;
+	case HELP::HELP::DONE:
+		return Calendar::COMMAND_DONE;
+		break;
+	case HELP::HELP::EDIT:
+		return Calendar::COMMAND_EDIT;
+		break;
+	case HELP::HELP::EXIT:
+		return Calendar::COMMAND_EXIT;
+		break;
+	case HELP::HELP::LOAD:
+		return Calendar::COMMAND_LOAD;
+		break;
+	case HELP::HELP::PRINT:
+		return Calendar::COMMAND_PRINT;
+		break;
+	case HELP::HELP::REDO:
+		return Calendar::COMMAND_REDO;
+		break;
+	case HELP::HELP::REMIND:
+		return Calendar::COMMAND_REMIND;
+		break;
+	case HELP::HELP::REPEAT:
+		return Calendar::COMMAND_REPEAT;
+		break;
+	case HELP::HELP::SAVE:
+		return Calendar::COMMAND_SAVE;
+		break;
+	case HELP::HELP::UNDO:
+		return Calendar::COMMAND_UNDO;
+		break;
+	case HELP::HELP::VIEW:
+		return Calendar::COMMAND_VIEW;
+		break;
+	case HELP::HELP::WEATHER:
+		return Calendar::COMMAND_WEATHER;
+		break;
+	default:
+		Utility::showToUser(Calendar::COMMAND_INVALID);
+		break;
+	}
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* print all command details for help */
+void Utility::getHelpForCommand(string cmd) {
+	if (isAdd(cmd)) {
+		Utility::showToUser(Calendar::HELP_ADD_1);
+		Utility::showToUser(Calendar::HELP_ADD_2);
+		Utility::showToUser(Calendar::HELP_ADD_3);
+		Utility::showToUser(Calendar::HELP_ADD_4);
+		Utility::showToUser(Calendar::HELP_ADD_5);
+		Utility::showToUser(Calendar::HELP_ADD_6);
+		Utility::showToUser(Calendar::HELP_ADD_7);
+		Utility::showToUser(Calendar::HELP_ADD_8);
+		Utility::showToUser(Calendar::HELP_ADD_9);
+		Utility::showToUser(Calendar::HELP_ADD_10);
+		Utility::showToUser(Calendar::HELP_ADD_11);
+	} else if (isBlock(cmd)) {
+		Utility::showToUser(Calendar::HELP_BLOCK);
+	} else if (isDecorate(cmd)) {
+		Utility::showToUser(Calendar::HELP_DECORATE);
+	} else if (isDelete(cmd)) {
+		Utility::showToUser(Calendar::HELP_DELETE_1);
+		Utility::showToUser(Calendar::HELP_DELETE_2);
+	} else if (isDone(cmd)) {
+		Utility::showToUser(Calendar::HELP_DONE_1);
+		Utility::showToUser(Calendar::HELP_DONE_2);
+	} else if (isEdit(cmd)) {
+		Utility::showToUser(Calendar::HELP_EDIT_1);
+		Utility::showToUser(Calendar::HELP_EDIT_2);
+		Utility::showToUser(Calendar::HELP_EDIT_3);
+	} else if (isExit(cmd)) {
+		Utility::showToUser(Calendar::HELP_EXIT);
+	} else if (isLoad(cmd)) {
+		Utility::showToUser(Calendar::HELP_LOAD);
+	} else if (isPrint(cmd)) {
+		Utility::showToUser(Calendar::HELP_PRINT);
+	} else if (isRedo(cmd)) {
+		Utility::showToUser(Calendar::HELP_REDO);
+	} else if (isRemind(cmd)) {
+		Utility::showToUser(Calendar::HELP_REMIND);
+	} else if (isRepeat(cmd)) {
+		Utility::showToUser(Calendar::HELP_REPEAT);
+	} else if (isSave(cmd)) {
+		Utility::showToUser(Calendar::HELP_SAVE_1);
+		Utility::showToUser(Calendar::HELP_SAVE_2);
+	} else if (isUndo(cmd)) {
+		Utility::showToUser(Calendar::HELP_UNDO);
+	} else if (isView(cmd)) {
+		Utility::showToUser(Calendar::HELP_VIEW_1);
+		Utility::showToUser(Calendar::HELP_VIEW_2);
+		Utility::showToUser(Calendar::HELP_VIEW_3);
+		Utility::showToUser(Calendar::HELP_VIEW_4);
+	} else if (isWeather(cmd)) {
+		Utility::showToUser(Calendar::HELP_WEATHER);
+	} else {
+		Utility::showToUser(Calendar::MESSAGE_NOT_YET_IMPLEMENTED);
+	}
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* get user to type Y or n, such as for exiting */
+bool Utility::getYesNoConfirmation() {
+	string choice;
+	do {
+		getline(cin, choice);
+		if (areEqual(choice, Utility::YES)) {
+			return true;
+		} else if (areEqual(choice, Utility::NO)) {
+			return false;
+		} else {
+			Utility::showToUser(Utility::ERROR_YES_NO_ENTRY);
+		}
+	} while (/*user choices will allow to leave this loop*/true);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+string Utility::getStringFromUser() {
+	string s;
+	getline(cin, s);
+	return s;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* fetch the username of the computer */
+string Utility::getUserName() {
+	TCHAR name[UNLEN + 1];
+	DWORD size = UNLEN + 1;
+	GetUserName((TCHAR*)name, &size); //TODO: could maybe generate an error so handle properly
+	string userName = name;
+	return userName;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* insert at the beginning of the string a numerotation */
+string Utility::numberize(int i, string s) {
+	string toDisplay = to_string(i) + Utility::NUMBER_SEPARATOR + s;
+	return toDisplay;
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* rebase a vector TASK_ATTR under the base of DATE_ENUM */
+vector<string> Utility::convert_DATE_ENUM_to_TASK_ATTR(vector<string> date_enum_vector) {
+	vector<string> task_attr_vector(Task::ATTR::SIZE);
+
+	task_attr_vector.at(Task::ATTR::STARTYEAR) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTYEAR);
+	task_attr_vector.at(Task::ATTR::STARTMONTH) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTMONTH);
+	task_attr_vector.at(Task::ATTR::STARTDAY) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTDAY);
+	task_attr_vector.at(Task::ATTR::STARTHOUR) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTHOUR);
+	task_attr_vector.at(Task::ATTR::STARTMINUTE) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTMINUTE);
+	task_attr_vector.at(Task::ATTR::ENDYEAR) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDYEAR);
+	task_attr_vector.at(Task::ATTR::ENDMONTH) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDMONTH);
+	task_attr_vector.at(Task::ATTR::ENDDAY) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDDAY);
+	task_attr_vector.at(Task::ATTR::ENDHOUR) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDHOUR);
+	task_attr_vector.at(Task::ATTR::ENDMINUTE) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDMINUTE);
+	task_attr_vector.at(Task::ATTR::ISDONE) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::ISDONE);
+	task_attr_vector.at(Task::ATTR::HASDATE) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::HASDATE);
+	task_attr_vector.at(Task::ATTR::HASEXPIRED) = date_enum_vector.at(DATE_ENUM::DATE_ENUM::HASEXPIRED);
+
+	return task_attr_vector;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* rebase a vector DATE_ENUM under the base of TASK_ATTR */
+vector<string> Utility::convert_TASK_ATTR_to_DATE_ENUM(vector<string> task_attr_vector) {
+	vector<string> date_enum_vector(DATE_ENUM::DATE_ENUM::LASTPOSITION);
+
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTYEAR) = task_attr_vector.at(Task::ATTR::STARTYEAR);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTMONTH) = task_attr_vector.at(Task::ATTR::STARTMONTH);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTDAY) = task_attr_vector.at(Task::ATTR::STARTDAY);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTHOUR) = task_attr_vector.at(Task::ATTR::STARTHOUR);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::STARTMINUTE) = task_attr_vector.at(Task::ATTR::STARTMINUTE);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDYEAR) = task_attr_vector.at(Task::ATTR::ENDYEAR);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDMONTH) = task_attr_vector.at(Task::ATTR::ENDMONTH);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDDAY) = task_attr_vector.at(Task::ATTR::ENDDAY);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDHOUR) = task_attr_vector.at(Task::ATTR::ENDHOUR);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::ENDMINUTE) = task_attr_vector.at(Task::ATTR::ENDMINUTE);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::ISDONE) = task_attr_vector.at(Task::ATTR::ISDONE);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::HASDATE) = task_attr_vector.at(Task::ATTR::HASDATE);
+	date_enum_vector.at(DATE_ENUM::DATE_ENUM::HASEXPIRED) = task_attr_vector.at(Task::ATTR::HASEXPIRED);
+
+	return date_enum_vector;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+void Utility::clearVector(vector<string> &v) {
+	v.clear();
+	vector<string>().swap(v);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+void Utility::clearVector(vector<int> &v) {
+	v.clear();
+	vector<int>().swap(v);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+void Utility::clearVector(vector<Task> &v) {
+	v.clear();
+	vector<Task>().swap(v);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* add the ESCAPE_CHAR at the beginning of the string */
+void Utility::addEscapeChar(string &s) {
+	if (Utility::areEqual(s.substr(0, Calendar::ESCAPE_CHAR.size()), Calendar::ESCAPE_CHAR)) {
+		//do nothing
+	} else {
+		s.insert(0, Calendar::ESCAPE_CHAR);
+	}
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+	 */
+
+/* remove the ESCAPE_CHAR at the beginning of the string */
+void Utility::removeEscapeChar(string &s) {
+	if (Utility::areEqual(s.substr(0, Calendar::ESCAPE_CHAR.size()), Calendar::ESCAPE_CHAR)) {
+		s.erase(0, Calendar::ESCAPE_CHAR.size());
+	}
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.h
+	 */
+
+/*
+This classes is the toolbox of KeepUp: all the methods not directly related to one class
+and that can be useful to more than one class
+*/
+#ifndef UTILITY_H
+#define UTILITY_H
+
+#include "Calendar.h"
+#include "CommandParser.h"
+#include <lmcons.h>
+#include <string>
+
+using namespace std;
+
+class Utility {
+public:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.h
+	 */
+
+	/* utility messages */
+	static const string NUMBER_SEPARATOR;
+	static const string ERROR_ENTER_NUMBER;
+	static const string ERROR_YES_NO_ENTRY;
+	static const string YES;
+	static const string NO;
+
+	/* bool methods */
+	static bool areEqual(string a, string b);
+	static bool getYesNoConfirmation();
+	static bool isAdd(Calendar::COMMAND_TYPE cmd);
+	static bool isContained(string key, string sentence);
+	static bool isEmpty(int i);
+	static bool isEmpty(string s);
+	static bool isEmpty(vector<int> v);
+	static bool isValidCommand(Calendar::COMMAND_TYPE cmd);
+	static bool isZero(int i);
+	static bool isLessThanTen(int i);
+	static bool stringToBool(string s);
+
+	/* convert */
+	static Calendar::COMMAND_TYPE stringToCOMMAND_TYPE(string command);
+	static EDIT_TYPE::EDIT_TYPE intToEDIT_TYPE(int editType);
+	static string boolToString(bool b);
+	static string COMMAND_TYPEToString(Calendar::COMMAND_TYPE cmd);
+	static vector<string> convert_DATE_ENUM_to_TASK_ATTR(vector<string> date_enum_vector);
+	static vector<string> convert_TASK_ATTR_to_DATE_ENUM(vector<string> task_attr_vector);
+
+	/* interaction with user */
+	static int getIntFromUser();
+	static string getHelp(int i);
+	static void getHelpForCommand(string cmd);
+	static string getStringFromUser();
+	static void showToUser(string);
+	static void showToUser(vector<string> strings);
+
+	/* system/format methods */
+	static string getUserName();
+	static string numberize(int i, string s);
+	static void clearVector(vector<int> &v);
+	static void clearVector(vector<string> &v);
+	static void clearVector(vector<Task> &v);
+	static void addEscapeChar(string &s);
+	static void removeEscapeChar(string &s);
+
+private:
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.h
+	 */
+
+	/* confirm method */
+	static bool isExit(string command);
+	static bool isAdd(string command);
+	static bool isBlock(string command);
+	static bool isDecorate(string command);
+	static bool isDelete(string command);
+	static bool isDone(string command);
+	static bool isEdit(string command);
+	static bool isHelp(string command);
+	static bool isSave(string command);
+	static bool isLoad(string command);
+	static bool isPrint(string command);
+	static bool isRemind(string command);
+	static bool isRepeat(string command);
+	static bool isView(string command);
+	static bool isWeather(string command);
+	static bool isUndo(string command);
+	static bool isRedo(string command);
+
+	/* stores 0 for readability */
+	static const int SAME;
+};
+
+#endif
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Utility.h
+
+
+
+
+

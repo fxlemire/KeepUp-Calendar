@@ -1,0 +1,2093 @@
+//@author: a0100789b
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\TaskTest.cpp
+	 */
+
+namespace KeepUpTest
+{
+	TEST_CLASS(TaskTest) {
+	public:
+		
+		TEST_METHOD(timeDateValidity) {
+
+			//2pm-3pm on 1/1/2014-29/2/2015
+			vector<string> uInputParsed(Task::ATTR::SIZE);
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "14";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "1";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//21:15-18:29
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "21";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "15";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "18";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "29";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "2";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//2pm-3pm on 3/5/2014 - 29/8/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "12";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "1";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "8";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//2.20-3.30pm on 1/1/2014 - 1/1/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "14";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "30";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "1";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "1";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "1";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//by 3pm 
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//4pm-10pm om 1/1/2014 - 29/2/2020
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "22";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "1";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2020";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//2.20pm - 2.30pm 29/2/2016 - 29/2/2020
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "14";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "14";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "30";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "29";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2016";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2020";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//2.30pm - 2.20pm 29/2/2016 - 29/2/2020
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "14";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "30";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "14";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "29";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2016";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+			
+			//2.20pm - 2.30pm 29/2/2016 - 29/2/2012
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "14";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "14";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "30";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "29";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2016";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2012";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//on 31/4/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "31";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//at 4.70pm
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "70";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//on 14/4/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//14.50 - 15.00 on 4/4/2014 
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "14";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "4";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//14.50-15.00 on 0/5/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "14";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "0";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "5";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//21:15-18:29 on 1/5/2015
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "21";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "15";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "18";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "29";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "5";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2015";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//16.50-25.20 on 1/5/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "25";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "5";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//16.50-16.62 on 32/5/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "16";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "62";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "32";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "5";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDYEAR) = Task::STRING_NOT_EXIST;
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//by 29/2/2016
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2016";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//by 22/5/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "22";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//by 29/2/2015
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//by 5/13/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "5";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "13";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//by 0/4/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "0";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2016";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//by 32/4/2015
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "32";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//by 3.20pm 30/4/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "30";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//by 3.20pm 31/4/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "31";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//by 3.63 2/4/2015
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "63";
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "2";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//by 26 30/0/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "26";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMONTH) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTYEAR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDDAY) = "30";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "0";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//30/4/2014-1/5/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "30";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "1";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//2/4/2014-10/6/2015
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "2";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "10";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "6";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//30/4/2014-29/2/2015
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "30";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//30/4/2014-29/2/2016
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "30";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "29";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "2";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2016";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//30/4/2014-1/5/2013
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "30";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "1";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2013";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//2/4/2014-3/5/2013
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "2";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "3";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2013";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//3/4/2014-5/3/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "3";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "5";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "3";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//0/4/2014-1/5/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "0";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "1";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//3/4/2014-1/4/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "3";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "1";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//3/12-3/13
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "3";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "12";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "3";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "13";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//2/4/2014-10/5/2013
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "2";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "10";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2013";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//2/6/2014-10/5/2015
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "2";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "6";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "10";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//3/4/2014-10/5/2013
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "3";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "10";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2013";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//3/4/2014 - 5/9/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "3";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "9";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//0/4/2014-1/5/2014
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "0";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "1";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//31/4/2014 - 30/5/2015
+			uInputParsed.at(Task::ATTR::STARTHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDHOUR) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = Task::STRING_NOT_EXIST;
+			uInputParsed.at(Task::ATTR::STARTDAY) = "31";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "30";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "5";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2015";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//4.20 - 5.30
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "30";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+
+			//4.20 - 5.10
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "10";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//5.20 - 5.20
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "17";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//4.20 - 5.65
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "65";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//4.40 - 5.30
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "30";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//5.20 - 5.00
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "17";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//4.20 - 3.50
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "16";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//0.20 - 25.30
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "0";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "20";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "25";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "30";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "14";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "4";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//1/2/2013 - 14/4/2014 3.40-5.50
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "15";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2013";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//29/2/2016 - 1/4/2016 3.40-5.00
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "15";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "00";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "29";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2016";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "1";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2016";
+			Assert::IsTrue(Task::isValidTime(uInputParsed));
+
+			//1/2/2013 - 14/4/2014 3.40-2.50
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "15";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "14";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2013";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//1/2/2013 - 14/4/2014 3.40-3.10
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "15";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "15";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "10";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2013";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//1/2/2015 - 14/4/2014 3.40-5.50
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "15";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2015";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//16/3/2014 - 14/4/2014 3.40-5.50
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "15";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "16";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "3";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//1/2/2014 - 14/13/2014 3.40-5.50
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "15";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2013";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "13";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));
+
+			//1/2/2014 - 14/4/2014 6.40-5.50
+			uInputParsed.at(Task::ATTR::STARTHOUR) = "18";
+			uInputParsed.at(Task::ATTR::STARTMINUTE) = "40";
+			uInputParsed.at(Task::ATTR::ENDHOUR) = "17";
+			uInputParsed.at(Task::ATTR::ENDMINUTE) = "50";
+			uInputParsed.at(Task::ATTR::STARTDAY) = "1";
+			uInputParsed.at(Task::ATTR::STARTMONTH) = "2";
+			uInputParsed.at(Task::ATTR::STARTYEAR) = "2014";
+			uInputParsed.at(Task::ATTR::ENDDAY) = "14";
+			uInputParsed.at(Task::ATTR::ENDMONTH) = "4";
+			uInputParsed.at(Task::ATTR::ENDYEAR) = "2014";
+			Assert::IsFalse(Task::isValidTime(uInputParsed));		
+
+		}
+
+	};
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\KeepUpTest\TaskTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+//this function is to check whether string small can be foudn in string big
+bool CommandParser::isFound(string big, string small) {
+	if (big.find(small)==string::npos) {
+		return false;
+	}
+	return true;
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+//this function is to check whether one string exist. for example, if startdate = string_not_exist,
+//it means  startdate is absent from user input
+bool CommandParser::isNotExist(string s) {
+	if (s == Task::STRING_NOT_EXIST) {
+		return true;
+	}
+	return false;
+}
+
+
+//this function is to check whether a string can be converted to integers
+bool CommandParser::isNumber(string s) {
+	try {	
+		int temp = stoi(s);
+		return true;
+	} catch (exception &) {
+		return false;
+	}
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+//this function is to retrieve the date information by reading the string after "on"
+string CommandParser::getStartDate(string input) {
+	try {
+		string uInput = input;
+		while (isFound(uInput,startDateIndicator)) {		
+			startDate = nextWord(uInput,startDateIndicator.substr(0,2));
+			string temp = startDate.substr(0,1);
+			if (!isNumber(temp)) {
+				unsigned int start = uInput.find(startDateIndicator);
+				start += startDateIndicator.size();
+				uInput = uInput.substr(start, uInput.size()-start);
+			}
+			else {
+				return startDate;
+			}
+		}
+		if (startDate==initial){
+			return Task::STRING_NOT_EXIST;
+		}
+
+		return Task::STRING_NOT_EXIST;
+	} catch (exception &) {
+		return Task::STRING_NOT_EXIST;
+	}
+}
+
+//this function is to retrieve the time information by reading the information after "at"
+string CommandParser::getStartTime(string input) {
+	try {
+		string uInput = input;
+		while (isFound(uInput,startTimeIndicator)) {		
+			startTime = nextWord(uInput,startTimeIndicator.substr(0,2));
+			string temp = startTime.substr(0,1);
+			if (!isNumber(temp)) {
+				unsigned int start = uInput.find(startTimeIndicator);
+				start += startTimeIndicator.size();
+				uInput = uInput.substr(start, uInput.size()-start);
+			}
+			else {
+				return startTime;
+			}
+		}
+		if (startTime==initial) {
+			return Task::STRING_NOT_EXIST;
+		}
+		return Task::STRING_NOT_EXIST;
+	} catch (exception &) {
+		startTime = Task::STRING_NOT_EXIST;
+		return startTime;
+	}
+}
+
+
+//if the task lasts for a few hours or a few days, the duration can be detected by using "-"
+//connecting the starting and ending dates/time
+string CommandParser::getDuration(string s) {
+	try {
+		unsigned int position = s.find(durationIndicator);
+		unsigned int start, end;
+		if (position == positionModerator1) {
+			start = startingPosition;
+			position += positionModerator2;
+			end = s.find_first_of(commandIndicator,position);
+			duration = s.substr(start, end-start);
+			return duration;
+		}
+		position -= positionModerator2;
+		start = s.find_last_of(commandIndicator,position);
+		start += positionModerator1;
+		position = s.find(durationIndicator);
+		position += positionModerator2;
+		if (position == s.size()) {
+			end = s.size()-1;
+			duration = s.substr(start, end-start);
+			return duration;
+		}
+		end = s.find_first_of(commandIndicator,position);
+		if (end == string::npos) {
+			end = s.size();
+		}
+		duration = s.substr(start, end-start);
+		return duration;
+	} catch (exception &) {
+		duration = Task::STRING_NOT_EXIST;
+		return duration;
+	}
+}
+
+//users can indicate location of a certain task by typing "at/in <location>
+//if location is not specified, it will appear in the task name
+string CommandParser::getLocation(string input) {
+	location = Task::STRING_NOT_EXIST;
+
+	try {
+		unsigned int start = input.find(locationIndicatorStart);
+
+		if (!isFound(input, locationIndicatorStart)||!isFound(input, locationIndicatorEnd)) {
+			return location;
+		}
+		else {
+			unsigned int end = input.find(locationIndicatorEnd);
+			start += positionModerator2;
+			unsigned int length = end - start;
+			location = input.substr(start, length);
+			return location;
+		}
+	} catch (exception &) {
+		return location;
+	}
+
+}
+
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+//this is to extract the start date/time from the duration
+string CommandParser::getDurationStart() {
+	try {
+		unsigned int end = duration.find_first_of(durationIndicator);
+		string durationStart = duration.substr(startingPosition,end);
+		if (isFound(durationStart, commandIndicator)) {
+			return duration.substr(startingPosition,end-positionModerator1);
+		}
+		return durationStart;
+
+	} catch (exception &) {
+		return Task::STRING_NOT_EXIST;
+	}
+}
+
+//this is to extract the end date/time from the duration
+string CommandParser::getDurationEnd() {
+	try {
+		unsigned int start = duration.find(durationIndicator);
+		start += positionModerator1;
+		string durationEnd = duration.substr(start,duration.size()-start);
+		if (isFound(durationEnd,commandIndicator)) {
+			return durationEnd.substr(positionModerator1,durationEnd.size()-positionModerator1);
+		}
+		return durationEnd;
+	} catch (exception &) {
+		return Task::STRING_NOT_EXIST;
+	}
+}
+
+/*this is to extract year from date information by using indicator "/", 
+similar for the following month and day function for both start and end date*/
+string CommandParser::getStartYear() {
+	if (isNotExist(startDate)) {
+		return Task::STRING_NOT_EXIST;
+	} else {
+
+		if (startDate.find_first_of(dayIndicator) == startDate.find_last_of(dayIndicator)){ // there is only one slash in date format
+			getCurrentDate();
+			return currentYear;
+		}
+		string year = startDate.substr(startDate.find_last_of(dayIndicator)+positionModerator1,
+			startDate.size() - startDate.find_last_of(dayIndicator));
+		startDate = startDate.substr(startingPosition,startDate.find_last_of(dayIndicator));
+		return year;
+	}
+}
+
+string CommandParser::getStartMonth() {
+
+	if (isNotExist(startDate)) {
+		return Task::STRING_NOT_EXIST;
+	}
+	string month ;
+	if (!isFound(startDate,dayIndicator)){
+		getCurrentDate();
+		return localMonth;
+	}
+	month= startDate.substr(startDate.find_first_of(dayIndicator)+positionModerator1,
+		startDate.find_last_of(dayIndicator) - startDate.find_first_of(dayIndicator)-positionModerator1);
+	startDate = startDate.substr(startingPosition,startDate.find_first_of(dayIndicator));
+	return month;
+}
+
+string CommandParser::getStartDay(){
+
+	return startDate;
+}
+
+//the following two functions is to extact hour and minute from a time string
+//by using the indicator ":" and "."
+//similar for end hour and end minute
+string CommandParser::getStartHour(){
+
+	try {
+		if (isNotExist(startTime)) {
+			return Task::STRING_NOT_EXIST;
+		}
+		string startHour;
+		if (startTime.find_first_of(hourIndicator)==string::npos) { //if only hour is indicated
+			if (isFound(startTime,afternoonIndicator)) { //if "pm" is detected
+				startHour = startTime.substr(startingPosition,startTime.find(afternoonIndicator));
+				unsigned int temp = stoi(startHour); //convert string hour to an integer hour
+				if (temp>0 && temp <12) { //if not noon or midnight, add 12 to convert to 24-hour timing
+					temp += hourModerator;
+				}	
+				startHour = to_string(temp);//convert back to string
+				return startHour;
+			}
+			if (isFound(startTime,morningIndicator)) {
+				startHour = startTime.substr(startingPosition,startTime.find(morningIndicator));
+				return startHour;
+			}
+			return startTime;
+		}
+		else {
+			if (isFound(startTime,afternoonIndicator)) {
+				startTime = startTime.substr(startingPosition,startTime.find(afternoonIndicator));
+				string hour = startTime.substr(startingPosition,startTime.find_first_of(hourIndicator));
+				unsigned int temp = stoi(hour);
+				if (temp>0 && temp<12) {
+					temp += hourModerator;
+				}
+				hour = to_string(temp);
+				return hour;
+			}
+			if (isFound(startTime,morningIndicator)) {
+				startTime = startTime.substr(startingPosition,startTime.find(morningIndicator));
+			}
+
+			return startTime.substr(startingPosition,startTime.find_first_of(hourIndicator));
+		}
+	} catch (exception &) {
+		return Task::STRING_NOT_EXIST;
+	}
+}
+
+string CommandParser::getStartMinute(){
+
+	try {
+		if (isNotExist(startTime)) {
+			return Task::STRING_NOT_EXIST;
+		}
+		unsigned int start = startTime.find_first_of(hourIndicator);
+		if (start == string::npos) {
+			return minuteNotExist;
+		}
+		start += positionModerator1;
+		return startTime.substr(start, startTime.size() - start);
+	} catch (exception &) {
+		return Task::STRING_NOT_EXIST;
+	}
+}
+
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+//extract task name from user input 
+string CommandParser::getName(string input){
+
+	name = input;
+
+	try {
+		//duration
+		string temp = durationIndicator1 + duration;
+		if (isFound(name, temp)) {
+			name = reSequence(name, temp);
+		}
+		temp = startTimeIndicator+duration;
+		if (isFound(name, temp)) {
+			name = reSequence(name, temp);
+		}
+		temp = startDateIndicator +duration;
+		if (isFound(name,temp)) {
+			name = reSequence(name, temp);
+		}
+		if (isFound(name, duration)) {
+			name = reSequence(name, duration);
+		}
+		//start date
+		temp = startDateIndicator+startDate;
+		if (isFound(name,temp)) {
+			name = reSequence(name, temp);
+		}
+		//end date
+		temp = endDateIndicator+commandIndicator+endDate;
+		if (isFound(name, temp)) {
+			name = reSequence(name, temp);
+		}
+		if (isFound(name, endDate)) {
+			name = reSequence(name,endDate);
+		}
+
+		//location
+		temp = locationIndicator1 + locationIndicatorStart + location + locationIndicatorEnd;
+		if (isFound(name,temp)) {
+			name = reSequence(name, temp);
+		}
+		temp = locationIndicator2 + locationIndicatorStart + location + locationIndicatorEnd;
+		if (isFound(name, temp)) {
+			name = reSequence(name,temp);
+		}
+		temp = locationIndicatorStart + location + locationIndicatorEnd;
+		if (isFound(name, temp)) {
+			name = reSequence(name,temp);
+		}
+
+		//start time
+		temp = startTimeIndicator + startTime;
+		if (isFound(name, temp)) {
+			name = reSequence(name, temp);
+		}
+		//end time
+		temp = endDateIndicator + commandIndicator + endTime;
+		if (isFound(name, temp)) {
+			name = reSequence(name, temp);
+		}
+		if (isFound(name, endTime)) {
+			name = reSequence(name, endTime);
+		}
+		int i = positionModerator1;
+		while (name.substr(startingPosition,positionModerator1)==commandIndicator||
+			   name.substr(startingPosition,positionModerator1)==durationIndicator) {
+			name = name.substr(i,name.size()-positionModerator1);
+		}
+		int j = positionModerator1;
+		while (name.substr(name.size()-positionModerator1,positionModerator1)==commandIndicator||
+			   name.substr(name.size()-positionModerator1,positionModerator1)==durationIndicator) {
+			name = name.substr(startingPosition,name.size()-positionModerator1);
+		}
+		if (name == initial) {
+			name = Task::STRING_NOT_EXIST;
+		}
+		return name;
+
+
+	} catch (exception &) {
+		return name;
+	}
+
+}
+
+//this fucntion is to exclude string small from string big
+string CommandParser::reSequence(string big, string small) {
+	string front = big.substr(startingPosition,big.find(small));
+	unsigned int start = big.find(small)+small.size();
+	string back = big.substr(start, big.size()-start);
+	big = front + back;
+	return big;
+}
+
+string CommandParser::getKeywords(string input) {
+
+	try {
+		unsigned int start = input.find_first_of(commandIndicator);
+		start += positionModerator1;
+		return input.substr(start, input.size()-start);
+	} catch (exception &) {
+		return Task::STRING_NOT_EXIST;
+	}
+
+}
+
+string CommandParser::getDescription(string input) {
+	return Task::STRING_NOT_EXIST;
+}
+
+//this is to modify start date/time and end date/time information if a duration is detected
+void CommandParser::dateTimeModifier() {
+	if (!isFound(duration,dayIndicator)) {
+		startTime = getDurationStart();
+		if (isFound(duration,afternoonIndicator) &&
+			duration.find(afternoonIndicator)==duration.rfind(afternoonIndicator)) {
+				unsigned int temp = stoi(startTime);
+				temp += hourModerator;
+				startTime = to_string(temp);
+		}
+		endTime = getDurationEnd(); 
+	} else {
+		startDate = getDurationStart();
+		endDate = getDurationEnd();
+	}	
+}
+
+
+
+vector<string> CommandParser::getParsedUserInput(string input){
+
+	vector<string> parsedInput(Task::ATTR::SIZE);
+	parsedInput[Task::ATTR::COMMAND] = getCommand(input);
+
+	Calendar::COMMAND_TYPE cmd = Utility::stringToCOMMAND_TYPE(getCommand(input));
+	transform(input.begin(), input.end(), input.begin(), tolower);
+	switch (cmd) {
+	case Calendar::COMMAND_TYPE::TASKADD:
+		while (hasTextMonth(input)) { // this is to check whether the user used "january" "feb" etc.
+			string front = input.substr(startingPosition,input.find(textDate));
+			unsigned int start = input.find(textDate)+textDate.size();
+			string back = input.substr(start, input.size()-start);
+			string numberDate = convertTextToNumber(textDate);
+			input = front + numberDate + back;
+			textDate = initial;
+		}
+
+		while(hasWeekDay(input)){
+			if(weekNo == nextIndicator || weekNo == thisIndicator){
+				lengthFront = lengthFront - positionModerator1 - weekNo.size();
+			}else if(weekNo == dateIndicator || weekNo == endDateIndicator || weekNo == endTime){
+				lengthFront = lengthFront;
+			}
+			string front = input.substr(startingPosition, lengthFront);
+			string back = input.substr(lengthBack, input.size() - lengthBack);
+			input = front + getDateFromWeek() + back;
+		}
+
+		while(hasSpecialDay(input)){
+			string front = input.substr(startingPosition,lengthFront);
+			string back = input.substr(lengthBack,input.size()-lengthBack);
+			input = front + getDateFromWeek() + back;
+		}
+
+		//normal starting date/time and end date/time by indicator "on" and "at"
+		startDate = getStartDate(input);
+		startTime = getStartTime(input);
+		endDate = getEndDate(input);
+		endTime = getEndTime(input);
+
+		//detect duration and modify start date/time and end date/time
+		duration = Task::STRING_NOT_EXIST;
+		part = input;
+		while (isFound(part, durationIndicator)) {
+			int position = part.find(durationIndicator);
+			position += positionModerator1;
+			string temp = part.substr(part.find_first_not_of(commandIndicator,position),1);
+			if (isNumber(temp)) {
+				duration = getDuration(part);
+				dateTimeModifier();
+			}
+			part = part.substr(position, part.size()-position);
+		}
+
+        //default start date as the date of today, if there is start time or deadline but no start date
+		if(isNotExist(startDate) && !isNotExist(startTime) || !isNotExist(endTime) && isNotExist(startDate)){
+			getCurrentDate();
+			if(endDate != currentDate){
+			    startDate = currentDate;
+			}else{
+				startDate = Task::STRING_NOT_EXIST;
+			}
+		}
+
+		//default end date as the date of today, if there is end time and the start date is today
+		if(isNotExist(endDate) && !isNotExist(endTime) && isNotExist(startTime)){
+			getCurrentDate();
+			if(startDate == currentDate){
+			    endDate = currentDate;
+			}else{
+				endDate =  Task::STRING_NOT_EXIST;
+			}
+		}
+
+		location = getLocation(input);
+		name = getName(input);
+		parsedInput[Task::ATTR::STARTYEAR] = getStartYear();
+		parsedInput[Task::ATTR::STARTMONTH] = getStartMonth();
+		parsedInput[Task::ATTR::STARTDAY] = getStartDay();
+		parsedInput[Task::ATTR::STARTHOUR] = getStartHour();
+		parsedInput[Task::ATTR::STARTMINUTE] = getStartMinute();
+		parsedInput[Task::ATTR::ENDYEAR] = getEndYear();
+		parsedInput[Task::ATTR::ENDMONTH] = getEndMonth();
+		parsedInput[Task::ATTR::ENDDAY] = getEndDay();
+		parsedInput[Task::ATTR::ENDHOUR] = getEndHour();
+		parsedInput[Task::ATTR::ENDMINUTE] = getEndMinute();
+		parsedInput[Task::ATTR::PRIORITY] = getPriority(input);
+		parsedInput[Task::ATTR::NAME] = name;
+		parsedInput[Task::ATTR::DESCRIPTION] = getDescription(input);
+		parsedInput[Task::ATTR::LOCATION] = getLocation(input);
+		parsedInput[Task::ATTR::ISDONE] = "false";
+		if (startDate == Task::STRING_NOT_EXIST && endDate == Task::STRING_NOT_EXIST) {
+			parsedInput[Task::ATTR::HASDATE] = "false";
+			parsedInput[Task::ATTR::HASEXPIRED] = "false";
+		}
+		else{
+			parsedInput[Task::ATTR::HASDATE] = "true";
+			parsedInput[Task::ATTR::HASEXPIRED] = "false";
+		}
+		break;
+	case Calendar::COMMAND_TYPE::TASKEDIT:
+		parsedInput.resize(EDIT::EDIT::LASTPOSITION);
+		parsedInput[EDIT::EDIT::SEARCH_KEYWORDS] = getKeywords(input);
+		break;
+	case Calendar::COMMAND_TYPE::TASKREMIND:
+		parsedInput[REMIND::REMIND::SEARCH_KEYWORDS] = getKeywords(input);
+		break;
+	case Calendar::COMMAND_TYPE::TASKREPEAT:
+		parsedInput[REPEAT::REPEAT::SEARCH_KEYWORDS] = getKeywords(input);
+		break;
+	default:
+		parsedInput[Task::ATTR::NAME] = getKeywords(input);
+		break;
+	}
+
+	return parsedInput;
+}
+
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+// this function is to return the previous word (if any) of string small in string big
+string CommandParser::previousWord(string big, string small) {
+	unsigned int end = big.find(small);
+	end -= positionModerator1;
+	unsigned int start = end-positionModerator1;
+	start = big.rfind(commandIndicator,start);
+	start += positionModerator1;
+	return big.substr(start, end-start);
+}
+
+// thiz is to return the next word (if any) of string small in string big
+string CommandParser::nextWord(string big, string small) {
+	try {
+		unsigned int start = big.find(small);
+		start += small.size();
+		start += positionModerator1;
+		unsigned int end = big.find(commandIndicator,start);
+		return big.substr(start, end-start);
+	} catch (exception &) {
+		return small;
+	}
+}
+
+//this function is to convert things like "january 1st" to "1/1"
+string CommandParser::convertTextToNumber(string s) {
+	string word1;
+	string word2;
+	string word3;
+	string day;
+	if (s.find(commandIndicator) == s.rfind(commandIndicator)) {
+		word1 = s.substr(startingPosition,s.find(commandIndicator));
+		unsigned int start = s.find(commandIndicator)+positionModerator1;
+		word2= s.substr(start, s.size()-start);
+		string temp = word1.substr(startingPosition,1);
+		if (isNumber(temp)) {
+			day = temp.substr(startingPosition,1);
+			temp = word1.substr(1,1);
+			if (isNumber(temp)) {
+				day = word1.substr(startingPosition,2);
+			}
+		}
+		else {
+			string temp = word2.substr(1,1);
+			if (isNumber(temp)) {
+				day = word2.substr(startingPosition,2);
+			}
+			else {
+				day = word2.substr(startingPosition,1);
+			}
+		}
+		return day + dayIndicator + textMonth;
+	}
+	else {
+		word1 = s.substr(startingPosition,s.find(commandIndicator));
+		unsigned int start = s.find(commandIndicator)+positionModerator1;
+		word2 = s.substr(start,s.rfind(commandIndicator)-start);
+		start = s.rfind(commandIndicator)+positionModerator1;
+		word3 = s.substr(start,s.size()-start);
+		if (isNumber(word1) && word1.size() == 4) {
+			return convertTextToNumber(word2 + commandIndicator + word3) + dayIndicator + word1;
+		}
+		if (isNumber(word2) && word2.size() == 4) {
+			return convertTextToNumber(word1 + commandIndicator + word3) + dayIndicator + word2;
+		}
+		if (isNumber(word3) && word3.size() == 4) {
+			return convertTextToNumber(word1 + commandIndicator + word2) + dayIndicator + word3;
+		}
+	}
+
+}
+
+//this is to detect and extract text month like january 1st from the user input
+void CommandParser::getTextMonth(string input, string indicator) {
+	unsigned int start = input.find(indicator);
+	unsigned int end = input.find(indicator)+indicator.size();
+	string temp;
+
+	if (start != 0) {
+
+		string previous = previousWord(input, indicator);
+		temp = previous.substr(startingPosition,1);
+		if (isNumber(temp)) {
+			start = input.rfind(previous,start);
+		}
+	}
+	if (end != input.size()){
+		string next = nextWord(input, indicator);
+		temp = next.substr(startingPosition,1);
+		if (isNumber(temp)) {
+			end = input.find(next,start)+next.size();
+			if (end!=input.size()){
+				next = nextWord(input,commandIndicator + next);
+				temp = next.substr(startingPosition,1);
+				if (isNumber(temp)) {
+					end = input.find(next,start)+next.size();
+				}
+			}
+		}
+	}
+	if (start == input.find(indicator) &&
+		end == input.find(indicator)+indicator.size()) {
+			textMonth == Task::STRING_NOT_EXIST;
+	}
+	else {
+		textDate = input.substr(start, end-start);
+	}
+}
+
+//check if the string found from the start is a single word separated by spaces
+bool CommandParser::isIndependent(string input, string s) {
+	try {
+	if (input.find(s) == 0&&input.substr(input.find(s)+s.size(),1) != commandIndicator) {
+			return false;
+	}else if(input.find(s)+s.size()-1 == input.size()&&input.substr(input.find(s)-1,1) != commandIndicator){
+	    return false;
+	}else if ((input.substr(input.find(s)+s.size(),1)) != commandIndicator||
+		(input.substr(input.find(s)-1,1) != commandIndicator)){
+	    return false;
+	}else{
+	return true;
+	}
+	} catch (exception &) {
+		return false;
+	}
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+	 */
+
+//this function is to check whther a text month is included in user input
+bool CommandParser::hasTextMonth(string input){
+	try {
+	string substring;
+	if (isFound(input, januaryIndicator1)) {
+		textMonth = textMonth1;
+		substring = input;
+		while (isFound(substring,januaryIndicator1)) {
+				getTextMonth(substring,januaryIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(januaryIndicator1)+januaryIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, januaryIndicator2)) {
+		textMonth = textMonth1;
+		substring = input;
+		while (isFound(substring,januaryIndicator2)) {
+				getTextMonth(substring,januaryIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(januaryIndicator2)+januaryIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, febIndicator1)) {
+		textMonth = textMonth2;
+		substring = input;
+		while (isFound(substring,febIndicator1)) {
+				getTextMonth(substring,febIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(febIndicator1)+febIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	
+	if (isFound(input, febIndicator2)) {
+		textMonth = textMonth2;
+		substring = input;
+		while (isFound(substring,febIndicator2)) {
+				getTextMonth(substring,febIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(febIndicator2)+febIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	
+	if (isFound(input, marchIndicator1)) {
+		textMonth = textMonth3;
+		substring = input;
+		while (isFound(substring,marchIndicator1)) {
+				getTextMonth(substring,marchIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(marchIndicator1)+marchIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, marchIndicator2)) {
+		textMonth = textMonth3;
+		substring = input;
+		while (isFound(substring,marchIndicator2)) {
+				getTextMonth(substring,marchIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(marchIndicator2)+marchIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, aprilIndicator1)) {
+		textMonth = textMonth4;
+		substring = input;
+		while (isFound(substring,aprilIndicator1)) {
+				getTextMonth(substring,aprilIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(aprilIndicator1)+aprilIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, aprilIndicator2)) {
+		textMonth = textMonth4;
+		substring = input;
+		while (isFound(substring,aprilIndicator2)) {
+				getTextMonth(substring,aprilIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(aprilIndicator2)+aprilIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, mayIndicator1)) {
+		textMonth = textMonth5;
+		substring = input;
+		while (isFound(substring,mayIndicator1)) {
+				getTextMonth(substring,mayIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(mayIndicator1)+mayIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	
+	if (isFound(input, juneIndicator1)) {
+		textMonth = textMonth6;
+		substring = input;
+		while (isFound(substring,juneIndicator1)) {
+				getTextMonth(substring,juneIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(juneIndicator1)+juneIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, juneIndicator2)) {
+		textMonth = textMonth6;
+		substring = input;
+		while (isFound(substring,juneIndicator2)) {
+				getTextMonth(substring,juneIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(juneIndicator2)+juneIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	
+	if (isFound(input, julyIndicator1)) {
+		textMonth = textMonth7;
+		substring = input;
+		while (isFound(substring,julyIndicator1)) {
+				getTextMonth(substring,julyIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(julyIndicator1)+julyIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	
+	if (isFound(input, julyIndicator2)) {
+		textMonth = textMonth7;
+		substring = input;
+		while (isFound(substring,julyIndicator2)) {
+				getTextMonth(substring,julyIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(julyIndicator2)+julyIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, augIndicator1)) {
+		textMonth = textMonth8;
+		substring = input;
+		while (isFound(substring,augIndicator1)) {
+				getTextMonth(substring,augIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(augIndicator1)+augIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, augIndicator2)) {
+		textMonth = textMonth8;
+		substring = input;
+		while (isFound(substring,augIndicator2)) {
+				getTextMonth(substring,augIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(augIndicator2)+augIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, septIndicator1)) {
+		textMonth = textMonth9;
+		substring = input;
+		while (isFound(substring,septIndicator1)) {
+				getTextMonth(substring,septIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(septIndicator1)+septIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, septIndicator2)) {
+		textMonth = textMonth9;
+		substring = input;
+		while (isFound(substring,septIndicator2)) {
+				getTextMonth(substring,septIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(septIndicator2)+septIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, septIndicator3)) {
+		textMonth = textMonth9;
+		substring = input;
+		while (isFound(substring,septIndicator3)) {
+				getTextMonth(substring,septIndicator3);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(septIndicator3)+septIndicator3.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, octIndicator1)) {
+		textMonth = textMonth10;
+		substring = input;
+		while (isFound(substring,octIndicator1)) {
+			getTextMonth(substring,octIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(octIndicator1)+octIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, octIndicator2)) {
+		textMonth = textMonth10;
+		substring = input;
+		while (isFound(substring,octIndicator2)) {
+				getTextMonth(substring,octIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(octIndicator2)+octIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	
+	if (isFound(input, novIndicator1)) {
+		textMonth = textMonth11;
+		substring = input;
+		while (isFound(substring,novIndicator1)) {
+				getTextMonth(substring,novIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(novIndicator1)+novIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, novIndicator2)) {
+		textMonth = textMonth11;
+		substring = input;
+		while (isFound(substring,novIndicator2)) {
+				getTextMonth(substring,novIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(novIndicator2)+novIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, decIndicator1)) {
+		textMonth = textMonth12;
+		substring = input;
+		while (isFound(substring,decIndicator1)) {
+				getTextMonth(substring,decIndicator1);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(decIndicator1)+decIndicator1.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (isFound(input, decIndicator2)) {
+		textMonth = textMonth12;
+		substring = input;
+		while (isFound(substring,decIndicator2)) {
+				getTextMonth(substring,decIndicator2);
+			if (isFound(textDate,commandIndicator)) {
+				return true;
+			}
+			unsigned int start = substring.find(decIndicator2)+decIndicator2.size();
+			substring = substring.substr(start,substring.size()-start);
+		}
+	}
+	if (textMonth == initial || !isFound(textMonth,commandIndicator)) {
+		return false;
+	}
+	} catch (exception &) {
+		return false;
+		}
+}
+
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.h
+	 */
+
+//This class serves to parse the user input into start date/time, end date/time, location 
+//and task title if any. When the user want to edit, delete or view, it will parse the keywords
+//from the user for searching purpose as well/
+
+//This class can parse the following date format. (with an "on" or "by" in front)
+//	day/month/year  e.g.  20/4/2014 
+//	day/month       e.g.  20/4  the year will be set to current year by default
+//  day             e.g   20    the year and month will be set to current month and year by default
+//  dates in text form  e.g  1st Jan 2014, December 25th, the day can be either in front or after
+//                           the month. The month can be in full spelling or abbreviation form. If
+//                           year is absent, it will be set to current year.
+//  dates in week days form. e.g Friday, next Monday, this wed, today, tmrw.
+
+
+//This class can parse the following time format. (with an "at" or "by" in front)
+// 8.30am
+// 8
+// 8pm
+// 5:30pm
+// 21.20
+
+//This class can parse a duration specified by the user with a "-" between the start date/time and end date/time
+// 2-3pm
+// 2.30 - 11.10pm
+// 6/9/2014 - 4/10/2015
+// april 1st - 2 may
+
+class CommandParser {
+public:
+	static string getCommand(string input);
+	static string getStartYear();
+	static string getStartMonth();
+	static string getStartDay();
+	static string getStartHour();
+	static string getStartMinute();
+	static string getEndYear();
+	static string getEndMonth();
+	static string getEndDay();
+	static string getEndHour();
+	static string getEndMinute();
+	static string getPriority(string input);
+	static string getName(string input);
+	static string getDescription(string input);
+	static string getLocation(string input);
+	static string getKeywords(string input);
+	static vector<string> getParsedUserInput(string uInput);
+
+	static vector<string> getDateAndTime(string input);
+	static string getStartDate(string input);
+	static string getStartTime(string input);
+	static string getEndDate(string input);
+	static string getDuration(string input);
+	static string getDurationStart();
+	static string getDurationEnd();
+	static string getEndTime(string input);
+
+	static string previousWord(string,string);
+	static string nextWord(string, string);
+	static string convertTextToNumber(string);
+
+	static string getCurrentDate();
+	static bool hasWeekDay(string input);
+	static string getDateFromWeek();
+	static string weekNumber(string, string);
+	static bool hasSpecialDay(string input);
+
+	static bool isFound(string, string);
+	static bool isFoundBack(string, string);
+	static bool isNotExist(string);
+	static bool isNumber(string);
+	static bool hasTextMonth(string);
+	static void getTextMonth(string,string);
+	static bool isIndependent(string, string);
+	static bool isIndependentBack(string, string);
+	static void dateTimeModifier();
+	static string reSequence(string, string);
+
+
+	void setUserInput(string ui);
+	void setDate(string d);
+	void setParsedInput(vector<string> pi);
+
+private:
+	static string userInput;
+	static string startDate;
+	static string endDate;
+	static string startTime;
+	static string endTime;
+	static string location;
+	static string name;
+	static string duration;
+	static string part;
+	static string localMonth;
+
+	static string textDate;
+	static string textMonth;
+	static string currentDate;
+	static string taskDate;
+	static string currentYear;
+	static string weekNo;
+	static string specialDay;
+	static int currentWeekDay;
+	static int localYear;
+	static int currentMonth;
+	static int currentDay;
+	static int weekDay;
+	static int taskDay;
+	static int taskMonth;
+	static int taskYear;
+	static int lengthFront;
+	static int lengthBack;
+
+	static string initial;
+
+	const static string commandIndicator;
+	const static string startDateIndicator;
+	const static string dateIndicator;
+	const static string dayIndicator;
+	const static string startTimeIndicator;
+	const static string locationIndicatorStart;
+	const static string locationIndicatorEnd;
+	const static string locationIndicator1;
+	const static string locationIndicator2;
+	const static string spaceIndicator;
+	const static string hourIndicator;
+	const static string hourIndicator1;
+	const static string hourIndicator2;
+	const static string endDateIndicator;
+	const static string durationIndicator;
+	const static string durationIndicator1;
+	const static string afternoonIndicator;
+	const static string morningIndicator;
+	const static string minuteNotExist;
+
+	const static string januaryIndicator1;
+	const static string januaryIndicator2;
+	const static string febIndicator1;
+	const static string febIndicator2;
+	const static string marchIndicator1;
+	const static string marchIndicator2;
+	const static string aprilIndicator1;
+	const static string aprilIndicator2;
+	const static string mayIndicator1;
+	const static string juneIndicator1;
+	const static string juneIndicator2;
+	const static string julyIndicator1;
+	const static string julyIndicator2;
+	const static string augIndicator1;
+	const static string augIndicator2;
+	const static string septIndicator1;
+	const static string septIndicator2;
+	const static string septIndicator3;
+	const static string octIndicator1;
+	const static string octIndicator2;
+	const static string novIndicator1;
+	const static string novIndicator2;
+	const static string decIndicator1;
+	const static string decIndicator2;
+
+	const static string textMonth1;
+	const static string textMonth2;
+	const static string textMonth3;
+	const static string textMonth4;
+	const static string textMonth5;
+	const static string textMonth6;
+	const static string textMonth7;
+	const static string textMonth8;
+	const static string textMonth9;
+	const static string textMonth10;
+	const static string textMonth11;
+	const static string textMonth12;
+	
+
+	const static int startingPosition;
+	const static int positionModerator1;
+	const static int positionModerator2;
+	const static int positionModerator3;
+	const static int positionModerator4;
+
+	const static int hourModerator;
+
+	const static int standardYear;
+	const static int standardWeek;
+	const static int lengthofAWeek;
+
+	const static string mondayIndicator1;
+	const static string mondayIndicator2;
+	const static string mondayIndicator3;
+	const static string mondayIndicator4;
+	const static string tuesdayIndicator1;
+	const static string tuesdayIndicator2;
+	const static string tuesdayIndicator3;
+	const static string tuesdayIndicator4;
+	const static string wednesdayIndicator1;
+	const static string wednesdayIndicator2 ;
+	const static string wednesdayIndicator3;
+	const static string wednesdayIndicator4;
+	const static string thursdayIndicator1;
+	const static string thursdayIndicator2;
+	const static string thursdayIndicator3;
+	const static string thursdayIndicator4;
+	const static string thursdayIndicator5;
+	const static string thursdayIndicator6;
+	const static string fridayIndicator1;
+	const static string fridayIndicator2;
+	const static string fridayIndicator3;
+	const static string fridayIndicator4;
+	const static string saturdayIndicator1;
+	const static string saturdayIndicator2;
+	const static string saturdayIndicator3;
+	const static string saturdayIndicator4;
+	const static string sundayIndicator1;
+	const static string sundayIndicator2;
+	const static string sundayIndicator3;
+	const static string sundayIndicator4;
+	const static string nextIndicator;
+	const static string thisIndicator;
+	const static string todayIndicator1;
+	const static string todayIndicator2;
+	const static string tomorrowIndicator1;
+	const static string tomorrowIndicator2;
+	const static string tomorrowIndicator3;
+
+	const static int monday;
+	const static int tuesday;
+	const static int wednesday;
+	const static int thursday;
+	const static int friday;
+	const static int saturday;
+	const static int sunday;
+
+	const static int monthIndicator1;
+	const static int monthIndicator2;
+	const static int monthIndicator3;
+	const static int monthIndicator4;
+	const static int monthIndicator5;
+	const static int monthIndicator6;
+	const static int monthIndicator7;
+	const static int monthIndicator8;
+	const static int monthIndicator9;
+	const static int monthIndicator10;
+	const static int monthIndicator11;
+	const static int monthIndicator12;
+	const static int monthModerator1;
+	const static int monthModerator2;
+	const static int monthModerator3;
+	const static int monthModerator4;
+
+	static vector<string> parsedInput;
+	static Calendar::COMMAND_TYPE _command;
+};
+
+#endif
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\CommandParser.h
+
+
+
+
+

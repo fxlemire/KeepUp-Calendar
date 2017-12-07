@@ -1,0 +1,439 @@
+//@author: a0081254l
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* undo/redo messages */
+const string Calendar::MESSAGE_UNDO_CAN = "Last command undone!";
+const string Calendar::MESSAGE_REDO_CAN = "Last command redone!";
+const string Calendar::MESSAGE_UNDO_CANNOT = "There are no more commands to be undone";
+const string Calendar::MESSAGE_REDO_CANNOT = "There are no more commands to be redone";
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+/* view messages */
+const string Calendar::MESSAGE_VIEW_TIMED_TASK = "Timed Tasks";
+const string Calendar::MESSAGE_VIEW_DEADLINE_TASK = "Deadline Tasks";
+const string Calendar::MESSAGE_VIEW_FLOATING_TASK = "Floating Tasks";
+const string Calendar::MESSAGE_VIEW_SEPARATOR = "----------------------";
+const string Calendar::MESSAGE_VIEW_DONE_TASK = "Here's what's done!";
+const string Calendar::MESSAGE_VIEW_DEL_TASK = "Here's what's deleted!";
+const string Calendar::MESSAGE_VIEW_ALL_TASK = "Here's what's left!";
+
+
+vector<string> Calendar::editChoices(EDIT_TYPE::EDIT_TYPE::EVERYTHING + 1);
+
+Calendar::Calendar() {
+	taskCollection;
+	undoTaskStack;
+	redoTaskStack;
+	undoIdxStack;
+	redoIdxStack;
+	timedTask;
+	deadlineTask;
+	floatingTask;
+}
+
+void Calendar::taskAdd(Task newTask) {
+	moveToUndo(newTask);
+	taskCollection.push_back(newTask);
+	undoIdxStack.push(taskCollection.size()-1);
+}
+
+void Calendar::taskDelete(int posTask) {
+	moveToUndo(posTask);
+	undoIdxStack.push(posTask);
+	taskCollection.at(posTask).setIsDeleted();
+	Utility::clearVector(searchResults);
+	Utility::clearVector(searchResultsForDisplay);
+}  
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+bool sortByDateTime(Task firstTask, Task secondTask) {
+	if(firstTask.getEndYear() != Task::STRING_NOT_EXIST && secondTask.getEndYear() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getEndYear() != secondTask.getEndYear()) {
+			return firstTask.getEndYear() < secondTask.getEndYear();
+		}
+   }
+	if(firstTask.getEndMonth() != Task::STRING_NOT_EXIST && secondTask.getEndMonth() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getEndMonth() != secondTask.getEndMonth()) {
+			return firstTask.getEndMonth() < secondTask.getEndMonth();
+		}
+   }
+	if(firstTask.getEndDay() != Task::STRING_NOT_EXIST && secondTask.getEndDay() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getEndDay() != secondTask.getEndDay()) {
+			return firstTask.getEndDay() < secondTask.getEndDay();
+		}
+   }
+	if(firstTask.getEndHour() != Task::STRING_NOT_EXIST && secondTask.getEndHour() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getEndHour() != secondTask.getEndHour()) {
+		   return firstTask.getEndHour() < secondTask.getEndHour();
+		}
+   }
+	if(firstTask.getEndMinute() != Task::STRING_NOT_EXIST && secondTask.getEndMinute() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getEndMinute() != secondTask.getEndMinute()) {
+			return firstTask.getEndMinute() < secondTask.getEndMinute();
+		}
+	}
+	if(firstTask.getStartYear() != Task::STRING_NOT_EXIST && secondTask.getStartYear() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getStartYear() != secondTask.getStartYear()) {
+			return firstTask.getStartYear() < secondTask.getStartYear();
+		}
+   }
+	if(firstTask.getStartMonth() != Task::STRING_NOT_EXIST && secondTask.getStartMonth() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getStartMonth() != secondTask.getStartMonth()) {
+			return firstTask.getStartMonth() < secondTask.getStartMonth();
+		}
+   }
+	if(firstTask.getStartDay() != Task::STRING_NOT_EXIST && secondTask.getStartDay() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getStartDay() != secondTask.getStartDay()) {
+			return firstTask.getStartDay() < secondTask.getStartDay();
+		}
+   }
+	if(firstTask.getStartHour() != Task::STRING_NOT_EXIST && secondTask.getStartHour() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getStartHour() != secondTask.getStartHour()) {
+		   return firstTask.getStartHour() < secondTask.getStartHour();
+		}
+   }
+	if(firstTask.getStartMinute() != Task::STRING_NOT_EXIST && secondTask.getStartMinute() != Task::STRING_NOT_EXIST) {
+		if (firstTask.getStartMinute() != secondTask.getStartMinute()) {
+			return firstTask.getStartMinute() < secondTask.getStartMinute();
+		}
+	}
+
+	return firstTask.getName() < secondTask.getName();
+}
+
+void Calendar::taskDisplayAll() {
+	int j=1;
+
+	for(int i=0; i<taskCollection.size(); i++) {
+		Task resultTask = taskCollection.at(i);
+		
+		if ((resultTask.getIsDeleted() != Calendar::TASK_DELETED) && (resultTask.getIsDone() != Calendar::TASK_DONE)) {
+			taskSortAll(resultTask);
+		}
+	}
+
+	if(timedTask.size() > 0 || deadlineTask.size() > 0 || floatingTask.size() > 0) {
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_ALL_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+	}
+
+	if(timedTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_TIMED_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		sort(timedTask.begin(), timedTask.end(), sortByDateTime);
+		for(int i=0; i<timedTask.size(); i++) {
+			Task resultTask = timedTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+
+	if(deadlineTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_DEADLINE_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		sort(deadlineTask.begin(), deadlineTask.end(), sortByDateTime);
+		for(int i=0; i<deadlineTask.size(); i++) {
+			Task resultTask = deadlineTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+
+	if(floatingTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_FLOATING_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		for(int i=0; i<floatingTask.size(); i++) {
+			Task resultTask = floatingTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+	Utility::clearVector(timedTask);
+	Utility::clearVector(deadlineTask);
+	Utility::clearVector(floatingTask);
+}
+
+void Calendar::taskDisplayDone() {
+	int j=1;
+
+	for(int i=0; i<taskCollection.size(); i++) {
+		Task resultTask = taskCollection.at(i);
+		
+		if (resultTask.getIsDone() == Calendar::TASK_DONE) {
+			taskSortAll(resultTask);
+		}
+	}
+
+	if(timedTask.size() > 0 || deadlineTask.size() > 0 || floatingTask.size() > 0) {
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_DONE_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+	}
+
+	if(timedTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_TIMED_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		sort(timedTask.begin(), timedTask.end(), sortByDateTime);
+		for(int i=0; i<timedTask.size(); i++) {
+			Task resultTask = timedTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+
+	if(deadlineTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_DEADLINE_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		sort(deadlineTask.begin(), deadlineTask.end(), sortByDateTime);
+		for(int i=0; i<deadlineTask.size(); i++) {
+			Task resultTask = deadlineTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+
+	if(floatingTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_FLOATING_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		for(int i=0; i<floatingTask.size(); i++) {
+			Task resultTask = floatingTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+	Utility::clearVector(timedTask);
+	Utility::clearVector(deadlineTask);
+	Utility::clearVector(floatingTask);
+}
+
+void Calendar::taskDisplayDeleted() {
+	int j=1;
+
+	for(int i=0; i<taskCollection.size(); i++) {
+		Task resultTask = taskCollection.at(i);
+		
+		if (resultTask.getIsDeleted() == Calendar::TASK_DELETED) {
+			taskSortAll(resultTask);
+		}
+	}
+
+	if(timedTask.size() > 0 || deadlineTask.size() > 0 || floatingTask.size() > 0) {
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_DEL_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+	}
+
+	if(timedTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_TIMED_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		sort(timedTask.begin(), timedTask.end(), sortByDateTime);
+		for(int i=0; i<timedTask.size(); i++) {
+			Task resultTask = timedTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+
+	if(deadlineTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_DEADLINE_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		sort(deadlineTask.begin(), deadlineTask.end(), sortByDateTime);
+		for(int i=0; i<deadlineTask.size(); i++) {
+			Task resultTask = deadlineTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+
+	if(floatingTask.size() > 0) {
+		int j=1;
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_FLOATING_TASK);
+		Utility::showToUser(Calendar::MESSAGE_VIEW_SEPARATOR);
+		for(int i=0; i<floatingTask.size(); i++) {
+			Task resultTask = floatingTask.at(i);
+			string resultName = resultTask.getDisplay();
+			string taskNameNumbered = Utility::numberize(j, resultName);
+			Utility::showToUser(taskNameNumbered);
+			j++;
+		}
+	}
+	Utility::clearVector(timedTask);
+	Utility::clearVector(deadlineTask);
+	Utility::clearVector(floatingTask);
+}
+
+void Calendar::taskSortAll(Task currTask) {
+	if (((currTask.getStartYear() != Task::STRING_NOT_EXIST) && 
+		(currTask.getStartMonth() != Task::STRING_NOT_EXIST) && 
+		(currTask.getStartDay() != Task::STRING_NOT_EXIST) && 
+		(currTask.getEndYear() != Task::STRING_NOT_EXIST) && 
+		(currTask.getEndMonth() != Task::STRING_NOT_EXIST)  && 
+		(currTask.getEndDay() != Task::STRING_NOT_EXIST))||
+		((currTask.getStartHour() != Task::STRING_NOT_EXIST) && 
+		(currTask.getStartMinute() != Task::STRING_NOT_EXIST) && 
+		(currTask.getEndHour() != Task::STRING_NOT_EXIST)  && 
+		(currTask.getEndMinute() != Task::STRING_NOT_EXIST))) {
+				timedTask.push_back(currTask);
+	}
+	else if (((currTask.getStartYear() == Task::STRING_NOT_EXIST) && 
+		(currTask.getStartMonth() == Task::STRING_NOT_EXIST) && 
+		(currTask.getStartDay() == Task::STRING_NOT_EXIST) && 
+		(currTask.getEndYear() != Task::STRING_NOT_EXIST) && 
+		(currTask.getEndMonth() != Task::STRING_NOT_EXIST)  && 
+		(currTask.getEndDay() != Task::STRING_NOT_EXIST))) {
+				deadlineTask.push_back(currTask);
+	}
+	else if (((currTask.getStartYear() != Task::STRING_NOT_EXIST) && 
+		(currTask.getStartMonth() != Task::STRING_NOT_EXIST) && 
+		(currTask.getStartDay() != Task::STRING_NOT_EXIST) && 
+		(currTask.getEndYear() == Task::STRING_NOT_EXIST) && 
+		(currTask.getEndMonth() == Task::STRING_NOT_EXIST)  && 
+		(currTask.getEndDay() == Task::STRING_NOT_EXIST))) {
+				deadlineTask.push_back(currTask);
+	}
+	else {
+			floatingTask.push_back(currTask);
+	} 
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+	 */
+
+void Calendar::replaceTask(Task newTask, int posTask) {
+	taskCollection.at(posTask) = newTask;
+}
+void Calendar::moveToUndo(Task newTask) {
+	Task currentTask = newTask;
+	currentTask.setIsDeleted();
+	undoTaskStack.push(currentTask);
+}
+
+void Calendar::moveToUndo(int posTask) {
+	Task currentTask = taskCollection.at(posTask);	
+	undoTaskStack.push(currentTask);
+}
+
+void Calendar::redoCommand() {
+	if(!redoTaskStack.empty() && !redoIdxStack.empty()) {
+		Task redoTask = redoTaskStack.top();
+		int posTask = redoIdxStack.top();
+		undoTaskStack.push(taskCollection.at(posTask));
+		undoIdxStack.push(posTask);
+		replaceTask(redoTask, posTask);
+		redoTaskStack.pop();
+		redoIdxStack.pop();
+		Utility::showToUser(Calendar::MESSAGE_REDO_CAN);
+	}
+	else {
+		Utility::showToUser(Calendar::MESSAGE_REDO_CANNOT);
+	}
+}
+
+void Calendar::undoCommand() {
+	if(!undoTaskStack.empty() && !undoIdxStack.empty()) {
+		Task undoTask = undoTaskStack.top();
+		int posTask = undoIdxStack.top();
+		redoTaskStack.push(taskCollection.at(posTask));
+		redoIdxStack.push(posTask);
+		replaceTask(undoTask, posTask);
+		undoTaskStack.pop();
+		undoIdxStack.pop();
+		Utility::showToUser(Calendar::MESSAGE_UNDO_CAN);
+	}
+	else {
+		Utility::showToUser(Calendar::MESSAGE_UNDO_CANNOT);
+	}
+}
+
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Calendar.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+	 */
+
+void Task::setIsDeleted() {
+	isDeleted = true;
+}
+void Task::setIsDeleted(string del) {
+	isDeleted = Utility::stringToBool(del);
+}
+void Task::setIsImpt() {
+	isImpt = true;
+}
+void Task::setIsImpt(string impt) {
+	isImpt = Utility::stringToBool(impt);
+}
+	// End of segment: C:\Users\FrancoisXavier\Documents\Visual Studio 2013\Projects\CS2103\KeepUp\Library\Task.cpp
+
+
+
+
+
